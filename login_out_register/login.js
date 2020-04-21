@@ -65,7 +65,7 @@ function loginUser(db,req,cb){
 
              if(token3.token!==null){
                cb(null,{message: 'Your account has not been verified, please check your email and click on the link to verify your account.',
-             token: token, refreshtoken: refreshtoken.token}); 
+             token: token, refreshtoken: refreshtoken.token, _id: user._id, username: user.username}); 
              }
              else cb('You have been logged out, please log in again.');
              //cb(null,{message: 'Successfully logged in.', token: token});
@@ -96,7 +96,8 @@ function loginUser(db,req,cb){
              if(err) cb(`Something went wrong in saving the token. ${err}`);
 
              if(token8.token!==null){
-               cb(null,{message: 'Sucessfully logged in.', token: token, refreshtoken: refreshtoken.token}); 
+               cb(null,{message: 'Sucessfully logged in.',
+                token: token, refreshtoken: refreshtoken.token, _id: user._id, username: user.username}); 
              }
              else cb('You have been logged out, please log in again.');
              //cb(null,{message: 'Successfully logged in.', token: token});

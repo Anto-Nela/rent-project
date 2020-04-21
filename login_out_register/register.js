@@ -121,7 +121,8 @@ const validation=require('../validations/functions');
                         if(error)  cb(`${error}`);
                         
                         else 
-                        cb(null,{message: 'User registered and message sent.', token: token, refreshtoken: refreshtoken.token});                   
+                        cb(null,{message: 'User registered and message sent.',
+                         token: token, refreshtoken: refreshtoken.token, _id: user1._id, username: user1.username});                   
                             
                         });            
                 }  else cb('You have been logged out, please log in again.');
