@@ -56,12 +56,13 @@ app.post('/login', (req, res)=>{
     });
 });
 
+/*
 //Generate token on request (expires after 6h)
 app.post('/generatetoken/:uemail', (req, res)=>{
   const uemail= req.params.uemail;
   gentk.postToken(db,uemail,req,res);
 });
-
+*/
 
 //Log out a user
 app.get('/logout', (req, res) => {

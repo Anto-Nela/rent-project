@@ -5,10 +5,10 @@ const users=require('../schema/user');
 function generateToken(user1){
     
     const token = jwt.sign({ email: user1.email, _id: user1._id },
-    process.env.JWT_KEY, { expiresIn: '24h' });
+    process.env.JWT_KEY, { expiresIn: '8h' });
   
     var today = new Date();
-    today.setHours(today.getHours() + 24);
+    today.setHours(today.getHours() + 8);
 
     const token2= new Tokens({
         token: token,
