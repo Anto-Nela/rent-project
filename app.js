@@ -13,6 +13,7 @@ const updatefunc= require('./functions/updatefunc');
 const reg= require('./login_out_register/register');
 const lgout= require('./login_out_register/logout');
 const lgin= require('./login_out_register/login');
+const gentk= require('./token_checkacv_generate/post_tokens');
 
 const checkAuth= require('./check-auth');
 const checkActv= require('./token_checkacv_generate/checkacvtoken');
@@ -55,6 +56,12 @@ app.post('/login', (req, res)=>{
     });
 });
 
+//Generate token on request (expires after 6h)
+app.post('/generatetoken/:uemail', (req, res)=>{
+  const uemail= req.params.uemail;
+  gentk.postToken(db,uemail,req,res);
+});
+
 
 //Log out a user
 app.get('/logout', (req, res) => {
@@ -64,6 +71,7 @@ app.get('/logout', (req, res) => {
         res.json(user);
     });
   });
+
 
   //Verify email
   app.get('/verify/:uuid',(req,res)=>{
