@@ -125,9 +125,19 @@ router.post('/logout', (req, res) => {
     });
   });
 
+     //search homes
+     router.get("/searchHomes", (req, res) => {
+    
+      gethomes.searchHomes(db,req, (err, json) => {
+        if (err) res.status(404).json({ message: `${err}` });
+        res.json(json);
+      });
+    });
+
 
    //get premium homes
   router.get("/homes/premiumHomes", (req, res) => {
+    
     gethomes.getPremiumHome(db, (err, json) => {
       if (err) res.status(404).json({ message: `${err}` });
       res.json(json);

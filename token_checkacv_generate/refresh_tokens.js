@@ -65,9 +65,6 @@ function postToken(db,uemail,req,res){
                             return res.status(500).json([error.message,' status: ', error.statusCode]);
                         } 
                     });
-                
-                    
-
 
                 return res.json({token: token2.token, refreshToken: token3.token});
               }

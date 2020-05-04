@@ -57,7 +57,7 @@ function findNearMe(lat, long, data) {
   }
   
   //searchi
-  function searchHomes(db,cb){
+  function searchHomes(db,req,cb){
     const maxValue= req.body.cmimiMax;
     const minValue= req.body.cmimiMin;
     const qytet= req.body.qytet;
@@ -69,12 +69,11 @@ function findNearMe(lat, long, data) {
     rooms = parseInt(nrrooms, 10);
     roommates = parseInt(nrroommates, 10);
     
-    db.collection("homes")
-    .find(
-      { "adress.qytet": qytet,
+    db.collection("homes").find(
+      { 'adress.qytet': qytet,
          cmimi: { $gte: minprice, $lte: maxprice },
-         "nr_dhomash": rooms
-    }, (err,doc)=>{
+         nr_dhomash: rooms
+    }).toArray((err,doc)=>{
       if(err) cb(`${err}`);
 
       else cb(null, doc);
@@ -179,6 +178,7 @@ exports.findByCity=findByCity;
 exports.findByPrice=findByPrice;
 exports.getAllHomes=getAllHomes;
 exports.getSpecificHome=getSpecificHome;
+exports.searchHomes=searchHomes;
 
 module.exports.findNearMe=findNearMe;
 module.exports.getDistanceFromLatLonInKm=getDistanceFromLatLonInKm;
