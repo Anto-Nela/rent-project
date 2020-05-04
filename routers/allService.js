@@ -59,9 +59,12 @@ router.post('/login', (req, res)=>{
 
 
 //Generate token on request (expires after 8h)
-router.post('/refreshtokens/:uemail', (req, res)=>{
+router.post('/refreshtokens/:uemail',checkAuth, (req, res)=>{
   const uemail= req.params.uemail;
+  
+  checkActv.checkActive(db,req,res,()=>{ 
   gentk.postToken(db,uemail,req,res);
+  });
 });
 
 
