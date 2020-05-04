@@ -54,7 +54,7 @@ function postToken(db,uemail,req,res){
                         } 
                     });
 
-                return res.json({token1: token2.token, token2: token3.token});
+                return res.json({token: token2.token, refreshToken: token3.token});
               }
 
         else  {
