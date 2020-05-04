@@ -112,7 +112,7 @@ router.post('/logout', (req, res) => {
    });     
 
    //find near me 
-   app.get("/nearme/:lat/:long", (req, res) => {
+   router.get("/nearme/:lat/:long", (req, res) => {
     const lat = req.params.lat;
     const long = req.params.long;
     gethomes.getAllHomes(db, (err, json) => {
