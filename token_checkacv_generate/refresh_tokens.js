@@ -17,12 +17,19 @@ function postToken(db,uemail,req,res){
         db.collection('Tokens').findOne({ token: token}, (err,tokeni1)=>{
             if(err) return res.status(500).json(`Something happend... ${err}`);
 
-        if(tokeni1.status=='active'){
-          
+        if(tokeni1.status=='active'){  
+            
             tokeni1.status='inactive';
             tokeni1.endDate=Date.now();
-            
-            console.log(tokeni1.status);
+                    
+            db.collection('Tokens').updateOne({token: token},{$set: tokeni1},(err,doc) =>{
+                if(!doc){
+                    var error=new myError('An error occurred','500');
+                    return res.status(500).json([error.message,' status: ', error.statusCode]);
+                        }
+                    });   
+
+
             const token21 = jwt.sign({ email: uemail, _id: tokeni1.userId },
                 process.env.JWT_KEY, { expiresIn: 900 });
               
@@ -59,6 +66,9 @@ function postToken(db,uemail,req,res){
                         } 
                     });
                 
+                    
+
+
                 return res.json({token: token2.token, refreshToken: token3.token});
               }
 
