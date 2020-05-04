@@ -4,25 +4,27 @@ const mongoose = require('mongoose');
 const mongodb = require('mongodb');
 const multer= require('multer');
 const ejs=require('ejs');
-const apiAdapter = require("./apiAdapter");
+//const apiAdapter = require("./apiAdapter");
 var router = express.Router();
 
-const getfunc = require('../functions/getfunc');
+const getfunc = require('../functions/get/getfunc');
+const gethomes= require('../functions/get/gethomes');
 const deletefunc = require('../functions/deletefunc');
 const addfunc = require('../functions/addfunc');
 const updatefunc= require('../functions/updatefunc');
 const reg= require('../login_out_register/register');
 const lgout= require('../login_out_register/logout');
 const lgin= require('../login_out_register/login');
-const gentk= require('../token_checkacv_generate/post_tokens');
+const gentk= require('../token_checkacv_generate/refresh_tokens');
 
 const checkAuth= require('../check-auth');
 const checkActv= require('../token_checkacv_generate/checkacvtoken');
 const verify=require('../verify_email/verify');
 
 require('dotenv/config');
-const BASE_URL = "https://rent-project.herokuapp.com";
-const api = apiAdapter(BASE_URL);
+//const BASE_URL = "https://rent-project.herokuapp.com";
+//const api = apiAdapter(BASE_URL);
+
 
 //Connect to DB
 const MongoClient =require('mongodb').MongoClient;
@@ -55,16 +57,16 @@ router.post('/login', (req, res)=>{
     });
 });
 
-/*
-//Generate token on request (expires after 6h)
-app.post('/generatetoken/:uemail', (req, res)=>{
+
+//Generate token on request (expires after 8h)
+router.post('/refreshtokens/:uemail', (req, res)=>{
   const uemail= req.params.uemail;
   gentk.postToken(db,uemail,req,res);
 });
-*/
+
 
 //Log out a user
-router.get('/logout', (req, res) => {
+router.post('/logout', (req, res) => {
 
     lgout.logoutUser(db,req,(err,user)=>{
         if(err) res.status(500).json({message: `${err}`});
@@ -109,10 +111,21 @@ router.get('/logout', (req, res) => {
     });
    });     
 
+   //find near me 
+   app.get("/nearme/:lat/:long", (req, res) => {
+    const lat = req.params.lat;
+    const long = req.params.long;
+    gethomes.getAllHomes(db, (err, json) => {
+      if (err) res.status(404).json({ message: `${err}` });
+
+      res.json(gethomes.findNearMe(lat, long, json));
+    });
+  });
+
 
    //get premium homes
   router.get("/homes/premiumHomes", (req, res) => {
-    getfunc.getPremiumHome(db, (err, json) => {
+    gethomes.getPremiumHome(db, (err, json) => {
       if (err) res.status(404).json({ message: `${err}` });
       res.json(json);
     });
@@ -121,7 +134,7 @@ router.get('/logout', (req, res) => {
   
   //get normal homes
   router.get("/homes/normalHomes", (req, res) => {
-    getfunc.getNormalHomes(db, (err, json) => {
+    gethomes.getNormalHomes(db, (err, json) => {
       if (err) res.status(404).json({ message: `${err}` });
       res.json(json);
     });
@@ -133,7 +146,7 @@ router.get('/logout', (req, res) => {
     const city = req.params.place;
     const newCity = city.charAt(0).toUpperCase() + city.slice(1);
     
-    getfunc.findByCity(db, newCity, (err, json) => {
+    gethomes.findByCity(db, newCity, (err, json) => {
       if (err) res.status(404).json({ message: `${err}` });
       res.json(json);
     });
@@ -145,7 +158,7 @@ router.get('/logout', (req, res) => {
     const maxValue = req.params.cmimiMax;
     const minValue = req.params.cmimiMin;
     
-    getfunc.findByPrice(db, minValue, maxValue, (err, json) => {
+   gethomes.findByPrice(db, minValue, maxValue, (err, json) => {
       if (err) res.status(404).json({ message: `${err}` });
       res.json(json);
     });
@@ -156,7 +169,7 @@ router.get('/logout', (req, res) => {
   router.get("/homes/rooms/:nr_rooms", (req, res) => {
     const nrooms = req.params.nr_rooms;
 
-    getfunc.findByRooms(db, nrooms, (err, json) => {
+    gethomes.findByRooms(db, nrooms, (err, json) => {
       if (err) res.status(404).json({ message: `${err}` });
       res.json(json);
     });
@@ -165,7 +178,7 @@ router.get('/logout', (req, res) => {
   
      //Get all homes
      router.get('/homes', (req, res) =>{   
-            getfunc.getAllHomes(db,(err,json)=>{
+            gethomes.getAllHomes(db,(err,json)=>{
                      if(err) res.status(404).json({message: `${err}`});
                      res.json(json);
                     });     
@@ -177,7 +190,7 @@ router.get('/logout', (req, res) => {
         const id = req.params.id;
         var o_id = new mongodb.ObjectID(id);
         
-        getfunc.getSpecificHome(db,id,o_id,(err,json)=>{
+        gethomes.getSpecificHome(db,id,o_id,(err,json)=>{
             if(err) res.status(404).json({message: `${err}`});
             res.json(json);
         });

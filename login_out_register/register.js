@@ -92,7 +92,10 @@ const validation=require('../validations/functions');
 
                                         //insert this in the database: 
                                         db.collection('Tokens').insertMany([token2,refreshtoken],(err, token3)=>{
-                                            if(err) cb(`Something went wrong in saving the token. ${err}`);
+                                            if(err) {
+                                                error=new myError('Something went wrong in saving the token.','500');
+                                                cb([error.message,' status: ', error.statusCode]);
+                                            }
                                
                 if(token3.token!==null){
                                         
