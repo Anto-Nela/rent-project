@@ -57,7 +57,6 @@ function postToken(db,uemail,req,res){
                         endDate: today2, 
                         createdAt: Date.now()
                     });
-
                     
                     db.collection('Tokens').insertMany([token2,token3],(err, token33)=>{
                         if(err){

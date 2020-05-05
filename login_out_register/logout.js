@@ -18,7 +18,7 @@ function logoutUser(db,req,cb){
    db.collection('Tokens').findOne({ token: token}, (err,tokeni1)=>{
         if(err) cb(`The token does not exist. ${err}`);
         
-        if(tokeni1.endDate>=date || tokeni1.status==='active' ){
+        if(tokeni1.status==='active' ){
             tokeni1.status='inactive';
 
              db.collection('Tokens').updateOne({token: token},{$set: tokeni1},(err,doc) =>{
