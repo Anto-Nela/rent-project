@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-var today = new Date();
-today.setMinutes(today.getMinutes() + 15);
 
 const tokenSchema = mongoose.Schema({
     token: {
@@ -17,8 +15,7 @@ const tokenSchema = mongoose.Schema({
       required: true
     },
     endDate: {
-        type: Date,
-        default: today
+        type: Date
       },
     createdAt: {
       type: Date,

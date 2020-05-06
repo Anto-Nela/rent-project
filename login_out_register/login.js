@@ -40,7 +40,10 @@ function loginUser(db,req,cb){
                     };           
                              
             transporter.sendMail(mailOptions, function(error, response){
-            if(error)  cb(`${error}`);
+            if(error)  {
+                var error=new myError(`${error}`,'404');
+                cb([error.message,' status: ', error.statusCode]);
+            }
             
             else {
 
@@ -61,7 +64,10 @@ function loginUser(db,req,cb){
 
          //insert this in the database: 
          db.collection('Tokens').insertMany([token2,refreshtoken],(err, token3)=>{
-             if(err) cb(`Something went wrong in saving the token. ${err}`);
+             if(err) {
+                var error=new myError('Something went wrong in saving the token.','500');
+                cb([error.message,' status: ', error.statusCode]);
+             }
 
              if(token3.token!==null){
                cb(null,{message: 'Your account has not been verified, please check your email and click on the link to verify your account.',
@@ -93,7 +99,10 @@ function loginUser(db,req,cb){
 
          //insert this in the database: 
          db.collection('Tokens').insertMany([token22,refreshtoken],(err, token8)=>{
-             if(err) cb(`Something went wrong in saving the token. ${err}`);
+             if(err) {
+                var error=new myError('Something went wrong in saving the token.','500');
+                cb([error.message,' status: ', error.statusCode]);
+             }
 
              if(token8.token!==null){
                cb(null,{message: 'Sucessfully logged in.',
@@ -107,7 +116,8 @@ function loginUser(db,req,cb){
     }
     });       
         } catch(err){
-        cb(`${err}`);
+            var error=new myError(`${err}`,'500');
+            cb([error.message,' status: ', error.statusCode]);
     }
 }
 

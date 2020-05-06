@@ -14,9 +14,12 @@ function checkActive(db,req,res,next){
         }
     
         db.collection('Tokens').findOne({ token: token}, (err,tokeni1)=>{
-            if(err) return res.status(500).json(`Something happend... ${err}`);
-
-        if(tokeni1.status==='inactive'){
+            if(err){
+                var error=new myError('Something happend...','500');
+             return res.status(500).json([error.message,' status: ', error.statusCode]);
+            }
+            
+        if(tokeni1.status==='inactive' || tokeni1.endDate>=date){
             var error=new myError('You have been logged out, please log in again.','404');
             return res.status(404).json([error.message,' status: ', error.statusCode]);
         }
