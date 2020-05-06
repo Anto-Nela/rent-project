@@ -63,16 +63,35 @@ function findNearMe(lat, long, data) {
     maxprice = parseInt(maxValue, 10);
     rooms = parseInt(nrrooms, 10);
    // roommates = parseInt(nrroommates, 10);
-    
-    db.collection("homes").find(
+    if(rooms==0){
+
+      db.collection("homes").find(
+        { 'adress.qytet': qytet,
+           cmimi: { $gte: minprice, $lte: maxprice }
+      }).toArray((err,doc)=>{
+        if(err) cb(`${err}`);
+
+        else cb(null, doc);
+      });
+
+    }
+    else{
+     
+      db.collection("homes").find(
       { 'adress.qytet': qytet,
          cmimi: { $gte: minprice, $lte: maxprice },
          nr_dhomash: rooms
     }).toArray((err,doc)=>{
-      if(err) cb(`${err}`);
+      if(err){
+        error=new myError(`Error! ${err}`,'400');
+        cb([error.message,' status: ', error.statusCode]);
+      }
 
       else cb(null, doc);
     });
+
+    }
+    
   }
   
   //Get Specific home
