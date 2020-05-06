@@ -127,8 +127,13 @@ router.post('/logout', (req, res) => {
 
      //search homes
      router.get("/searchHomes", (req, res) => {
-    
-      gethomes.searchHomes(db,req, (err, json) => {
+      const maxValue= req.query.cmimiMax;
+      const minValue= req.query.cmimiMin;
+      const qytet= req.query.qytet;
+      const nrrooms= req.query.rooms;
+      //const nrroommates= req.body.roommates;
+  
+      gethomes.searchHomes(db,maxValue,minValue,qytet,nrrooms, (err, json) => {
         if (err) res.status(404).json({ message: `${err}` });
         res.json(json);
       });

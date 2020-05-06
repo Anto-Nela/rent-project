@@ -57,17 +57,12 @@ function findNearMe(lat, long, data) {
   }
   
   //searchi
-  function searchHomes(db,req,cb){
-    const maxValue= req.body.cmimiMax;
-    const minValue= req.body.cmimiMin;
-    const qytet= req.body.qytet;
-    const nrrooms= req.body.rooms;
-    const nrroommates= req.body.roommates;
+  function searchHomes(db,maxValue,minValue,qytet,nrrooms,cb){
 
     minprice = parseInt(minValue, 10);
     maxprice = parseInt(maxValue, 10);
     rooms = parseInt(nrrooms, 10);
-    roommates = parseInt(nrroommates, 10);
+   // roommates = parseInt(nrroommates, 10);
     
     db.collection("homes").find(
       { 'adress.qytet': qytet,
