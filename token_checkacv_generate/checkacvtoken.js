@@ -19,7 +19,7 @@ function checkActive(db,req,res,next){
              return res.status(500).json([error.message,' status: ', error.statusCode]);
             }
             
-        if(tokeni1.status==='inactive' || tokeni1.endDate>=date){
+        if(tokeni1.status==='inactive'){
             var error=new myError('You have been logged out, please log in again.','404');
             return res.status(404).json([error.message,' status: ', error.statusCode]);
         }
