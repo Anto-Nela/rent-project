@@ -10,18 +10,18 @@ function checkActive(db,req,res,next){
 
         if (!token) {
             var error=new myError('No token provided.','401');
-            return res.status(401).json([error.message,' status: ', error.statusCode]);
+            return res.json([error.message,' status: ', error.statusCode]);
         }
     
         db.collection('Tokens').findOne({ token: token}, (err,tokeni1)=>{
             if(err){
                 var error=new myError('Something happend...','500');
-             return res.status(500).json([error.message,' status: ', error.statusCode]);
+             return res.json([error.message,' status: ', error.statusCode]);
             }
             
         if(tokeni1.status==='inactive'){
             var error=new myError('You have been logged out, please log in again.','404');
-            return res.status(404).json([error.message,' status: ', error.statusCode]);
+            return res.json([error.message,' status: ', error.statusCode]);
         }
 
         else {
@@ -30,7 +30,8 @@ function checkActive(db,req,res,next){
     });
 }
 catch(error){
-    return res.json(`${error}`);
+    var error=new myError('An error occurred','500');
+    return res.json([error.message,' status: ', error.statusCode]);
 }
 }
 

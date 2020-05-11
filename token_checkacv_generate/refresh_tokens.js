@@ -11,11 +11,14 @@ function postToken(db,uemail,req,res){
         
         if (!token) {
             var error=new myError('No token provided.','401');
-            return res.status(401).json([error.message,' status: ', error.statusCode]);
+            return res.json([error.message,' status: ', error.statusCode]);
         }
     
         db.collection('Tokens').findOne({ token: token}, (err,tokeni1)=>{
-            if(err) return res.status(500).json(`Something happend... ${err}`);
+            if(err){
+                var error=new myError('Something happend...','500');
+                return res.json([error.message,' status: ', error.statusCode]);
+            } 
 
         if(tokeni1.status=='active'){  
             
@@ -25,7 +28,7 @@ function postToken(db,uemail,req,res){
             db.collection('Tokens').updateOne({token: token},{$set: tokeni1},(err,doc) =>{
                 if(!doc){
                     var error=new myError('An error occurred','500');
-                    return res.status(500).json([error.message,' status: ', error.statusCode]);
+                    return res.json([error.message,' status: ', error.statusCode]);
                         }
                     });   
 
@@ -61,7 +64,7 @@ function postToken(db,uemail,req,res){
                     db.collection('Tokens').insertMany([token2,token3],(err, token33)=>{
                         if(err){
                             error=new myError('Something went wrong in saving the token.','500');
-                            return res.status(500).json([error.message,' status: ', error.statusCode]);
+                            return res.json([error.message,' status: ', error.statusCode]);
                         } 
                     });
 
@@ -70,12 +73,13 @@ function postToken(db,uemail,req,res){
 
         else  {
             var error=new myError('Token is inactive.','402');
-            return res.status(402).json([error.message,' status: ', error.statusCode]);
+            return res.json([error.message,' status: ', error.statusCode]);
         }
         
     });
     } catch(error){
-    return res.json(`${error}`);
+        var error=new myError('An error occured','500');
+        return res.json([error.message,' status: ', error.statusCode]);
     }
     
 }

@@ -18,7 +18,10 @@ const validation=require('../validations/functions');
     let hash2= bcrypt.hashSync(req.body.confirmpass,14);
     req.body.confirmpass=hash2;
 
-    const uuid=uuidv4();
+    var uuid=uuidv4();
+    let uuid1= bcrypt.hashSync(uuid,16);
+    uuid=uuid1;
+    //req.body.uuid=uuid1;
 
     var user1=new users({
         email: req.body.email,
@@ -51,16 +54,22 @@ const validation=require('../validations/functions');
         try{  
             
             db.collection('users').findOne({ email: req.body.email},(err,user)=>{
-               if(err) cb(`${err}`);
+               if(err){
+                var error=new myError('An error occurred in searching for that email','500');
+                cb([error.message, ' status: ', error.statusCode]);
+               }
                 
                if(user){
                    var error=new myError('Email already exists','400');
-                cb([error.message, ' status: ', error.statusCode]);
+                   cb([error.message, ' status: ', error.statusCode]);
                } 
                 
                else { 
                     db.collection('users').findOne({ username: req.body.username}, (err,user2)=>{
-                        if(err) cb(`${err}`);
+                        if(err){
+                            var error=new myError('An error occurred in searching for that username','500');
+                            cb([error.message, ' status: ', error.statusCode]);
+                        } 
                          
                         if(user2){
                             var error=new myError('User with that username already exists','400');
@@ -69,8 +78,14 @@ const validation=require('../validations/functions');
 
                         else{
                             db.collection('users').insertOne(user1,(err,doc) =>{
-                                if(!doc) cb(`${err}`);
-                                if(err) cb(`${err}`);
+                                if(!doc){
+                                var error=new myError('No user to save','500');
+                                cb([error.message, ' status: ', error.statusCode]);
+                                } 
+                                if(err){
+                                 var error=new myError('An error occurred in saving the user','500');
+                                 cb([error.message, ' status: ', error.statusCode]);
+                                }
 
                              else {
                                     console.log(user1);
@@ -120,25 +135,31 @@ const validation=require('../validations/functions');
                                 };
                         console.log(mailOptions);
                                          
-                        transporter.sendMail(mailOptions, function(error, response){
-                        if(error)  cb(`${error}`);
+                        transporter.sendMail(mailOptions, function(err, response){
+                        if(err){
+                            var error=new myError('an error occurred','500');
+                            cb([error.message, ' status: ', error.statusCode]);
+                        }
                         
                         else 
                         cb(null,{message: 'User registered and message sent.',
                          token: token, refreshtoken: refreshtoken.token, _id: user1._id, username: user1.username});                   
                             
                         });            
-                }  else cb('You have been logged out, please log in again.');
-                                   
-                                   });
-                                }
-                            });   
-                        }
-                    });
-                }
-            });
-        }    catch(err){
-            cb(`${err}`);
+                }  else {
+                 var error=new myError('You have been logged out, please log in again.','400');
+                cb([error.message, ' status: ', error.statusCode]);
+                    }             
+                });
+              }
+           });  
+          }
+       });
+    }
+ });
+ }   catch(err){
+            var error=new myError('An error occurred','500');
+            cb([error.message, ' status: ', error.statusCode]);
         }
 }
 

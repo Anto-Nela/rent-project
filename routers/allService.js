@@ -42,7 +42,8 @@ MongoClient.connect(uri,{useUnifiedTopology: true}, function(err, client) {
 router.post('/register', (req, res) =>{
     
     reg.regUser(db,req,(err, user)=>{
-        if(err) res.status(400).json({message:`${err}`});
+        if(err) res.json({message:`${err}`});
+        
         res.json(user);
        });
 });
@@ -52,7 +53,7 @@ router.post('/register', (req, res) =>{
 router.post('/login', (req, res)=>{
 
     lgin.loginUser(db,req,(err, user)=>{
-        if(err) res.status(400).json({message: `${err}`});
+        if(err) res.json({message: `${err}`});
         res.json(user);
     });
 });
@@ -72,7 +73,7 @@ router.post('/refreshtokens/:uemail',checkAuth, (req, res)=>{
 router.post('/logout', (req, res) => {
 
     lgout.logoutUser(db,req,(err,user)=>{
-        if(err) res.status(500).json({message: `${err}`});
+        if(err) res.json({message: `${err}`});
         res.json(user);
     });
   });
@@ -83,7 +84,7 @@ router.post('/logout', (req, res) => {
       const uuid=req.params.uuid;
 
       verify.verifyEmail(db,uuid,(err,user)=>{
-        if(err) res.status(500).json({message: `${err}`});
+        if(err) res.json({message: `${err}`});
         res.json(user);
       });
   });
@@ -93,7 +94,7 @@ router.post('/logout', (req, res) => {
    router.get('/users', (req, res) =>{
     
     getfunc.getAllUsers(db,(err,json)=>{
-        if(err) res.status(404).json({message: `${err}`});
+        if(err) res.json({message: `${err}`});
         res.json(json);
        });
     });
@@ -108,7 +109,7 @@ router.post('/logout', (req, res) => {
     checkActv.checkActive(db,req,res,()=>{ 
         
         getfunc.getSpecificUser(db,id,o_id,(err,json)=>{
-        if(err) res.status(404).json({message: `${err}`});
+        if(err) res.json({message: `${err}`});
         res.json(json);
     });
     });
@@ -119,7 +120,7 @@ router.post('/logout', (req, res) => {
     const lat = req.params.lat;
     const long = req.params.long;
     gethomes.getAllHomes(db, (err, json) => {
-      if (err) res.status(404).json({ message: `${err}` });
+      if (err) res.json({ message: `${err}` });
 
       res.json(gethomes.findNearMe(lat, long, json));
     });
@@ -134,7 +135,7 @@ router.post('/logout', (req, res) => {
       //const nrroommates= req.body.roommates;
   
       gethomes.searchHomes(db,maxValue,minValue,qytet,nrrooms, (err, json) => {
-        if (err) res.status(404).json({ message: `${err}` });
+        if (err) res.json({ message: `${err}` });
         res.json(json);
       });
     });
@@ -144,7 +145,7 @@ router.post('/logout', (req, res) => {
   router.get("/homes/premiumHomes", (req, res) => {
     
     gethomes.getPremiumHome(db, (err, json) => {
-      if (err) res.status(404).json({ message: `${err}` });
+      if (err) res.json({ message: `${err}` });
       res.json(json);
     });
   });
@@ -153,7 +154,7 @@ router.post('/logout', (req, res) => {
   //get normal homes
   router.get("/homes/normalHomes", (req, res) => {
     gethomes.getNormalHomes(db, (err, json) => {
-      if (err) res.status(404).json({ message: `${err}` });
+      if (err) res.json({ message: `${err}` });
       res.json(json);
     });
   });
@@ -165,7 +166,7 @@ router.post('/logout', (req, res) => {
     const newCity = city.charAt(0).toUpperCase() + city.slice(1);
     
     gethomes.findByCity(db, newCity, (err, json) => {
-      if (err) res.status(404).json({ message: `${err}` });
+      if (err) res.json({ message: `${err}` });
       res.json(json);
     });
   });
@@ -177,7 +178,7 @@ router.post('/logout', (req, res) => {
     const minValue = req.params.cmimiMin;
     
    gethomes.findByPrice(db, minValue, maxValue, (err, json) => {
-      if (err) res.status(404).json({ message: `${err}` });
+      if (err) res.json({ message: `${err}` });
       res.json(json);
     });
   });
@@ -188,7 +189,7 @@ router.post('/logout', (req, res) => {
     const nrooms = req.params.nr_rooms;
 
     gethomes.findByRooms(db, nrooms, (err, json) => {
-      if (err) res.status(404).json({ message: `${err}` });
+      if (err) res.json({ message: `${err}` });
       res.json(json);
     });
   });
@@ -196,11 +197,12 @@ router.post('/logout', (req, res) => {
   
      //Get all homes
      router.get('/homes', (req, res) =>{   
-            gethomes.getAllHomes(db,(err,json)=>{
-                     if(err) res.status(404).json({message: `${err}`});
-                     res.json(json);
-                    });     
-       });
+            
+      gethomes.getAllHomes(db,(err,json)=>{
+        if(err) res.json({message: `${err}`});
+        res.json(json);
+      });     
+    });
 
 
     //Get specific home
@@ -209,7 +211,7 @@ router.post('/logout', (req, res) => {
         var o_id = new mongodb.ObjectID(id);
         
         gethomes.getSpecificHome(db,id,o_id,(err,json)=>{
-            if(err) res.status(404).json({message: `${err}`});
+            if(err) res.json({message: `${err}`});
             res.json(json);
         });
 
@@ -219,7 +221,7 @@ router.post('/logout', (req, res) => {
     //Get all landlords
     router.get('/landlords', (req, res) =>{
         getfunc.getAllLandlords(db,(err,json)=>{
-            if(err) res.status(404).json({message: `${err}`});
+            if(err) res.json({message: `${err}`});
             res.json(json);
         });
     });
@@ -231,7 +233,7 @@ router.post('/logout', (req, res) => {
         var o_id = new mongodb.ObjectID(id);
 
         getfunc.getSpecificLandlord(db,id,o_id,(err,json)=>{
-            if(err) res.status(404).json({message: `${err}`});
+            if(err) res.json({message: `${err}`});
             res.json(json);
         });
     });
@@ -245,7 +247,7 @@ router.post('/logout', (req, res) => {
         checkActv.checkActive(db,req,res,()=>{ 
             
             deletefunc.deleteLandlord(db,id,o_id,(err,json)=>{
-            if(err) res.status(404).json({message: `${err}`});
+            if(err) res.json({message: `${err}`});
             res.json(json);
         });
 
@@ -262,7 +264,7 @@ router.post('/logout', (req, res) => {
         checkActv.checkActive(db,req,res,()=>{ 
 
             deletefunc.deleteUser(db,id,o_id,(err,json)=>{
-            if(err) res.status(404).json({message: `${err}`});
+            if(err) res.json({message: `${err}`});
             res.json(json);
         });
         });
@@ -277,7 +279,7 @@ router.post('/logout', (req, res) => {
         checkActv.checkActive(db,req,res,()=>{ 
             
             deletefunc.deleteHome(db,id,o_id,(err,json)=>{
-            if(err) res.status(404).json({message: `${err}`});
+            if(err) res.json({message: `${err}`});
             res.json(json);
         });
         });
@@ -290,7 +292,7 @@ router.post('/logout', (req, res) => {
         checkActv.checkActive(db,req,res,()=>{
             
             addfunc.addLandlord(db,req,(err,json)=>{
-            if(err) res.status(404).json({message: `${err}`});
+            if(err) res.json({message: `${err}`});
             res.json(json);
            });
          });
@@ -303,7 +305,7 @@ router.post('/logout', (req, res) => {
         checkActv.checkActive(db,req,res,()=>{ 
             
             addfunc.addHome(db,req,(err,json)=>{
-            if(err) res.status(404).json({message: `${err}`});
+            if(err) res.json({message: `${err}`});
             res.json(json);
            });
         });
@@ -318,7 +320,7 @@ router.post('/logout', (req, res) => {
         checkActv.checkActive(db,req,res,()=>{ 
            
             updatefunc.updateUser(db,req,id,o_id,(err,json)=>{
-            if(err) res.status(404).json({message: `${err}`});
+            if(err) res.json({message: `${err}`});
             res.json(json);
         }); 
         });
@@ -333,7 +335,7 @@ router.post('/logout', (req, res) => {
         checkActv.checkActive(db,req,res,()=>{ 
             
             updatefunc.updateHome(db,req,id,o_id,(err,json)=>{
-            if(err) res.status(404).json({message: `${err}`});
+            if(err) res.json({message: `${err}`});
             res.json(json);
         });
         });
@@ -348,7 +350,7 @@ router.post('/logout', (req, res) => {
         checkActv.checkActive(db,req,res,()=>{
             
             updatefunc.updateLandlord(db,req,id,o_id,(err,json)=>{
-            if(err) res.status(404).json({message: `${err}`});
+            if(err) res.json({message: `${err}`});
             res.json(json);
          });
        });

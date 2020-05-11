@@ -16,7 +16,10 @@ function logoutUser(db,req,cb){
     }
         
    db.collection('Tokens').findOne({ token: token}, (err,tokeni1)=>{
-        if(err) cb(`The token does not exist. ${err}`);
+        if(err) {
+            var error=new myError(`The token does not exist. ${err}`,'404');
+            cb([error.message,' status: ', error.statusCode]);
+        }
         
         if(tokeni1.status==='active' ){
             tokeni1.status='inactive';
@@ -24,7 +27,7 @@ function logoutUser(db,req,cb){
 
              db.collection('Tokens').updateOne({token: token},{$set: tokeni1},(err,doc) =>{
                     if(!doc) {
-                        var error=new myError(`${err}`,'404');
+                        var error=new myError('No token found','404');
                         cb([error.message,' status: ', error.statusCode]);
                     }
                         else cb(null, {message: 'You have been logged out'});
@@ -36,7 +39,7 @@ function logoutUser(db,req,cb){
     });
     
 } catch(error){
-    var error=new myError(`Logout failed.${error}`,'500');
+    var error=new myError('Logout failed.','500');
     cb([error.message,' status: ', error.statusCode]);
 }
 }

@@ -1,15 +1,20 @@
 const users=require('../../schema/user');
+const myError=require('../../error');
 
 //Get all users
 function getAllUsers(db,cb){
         db.collection('users').find({}).toArray(function(err, docs) {
              try{
-            if(err) cb(`${err}`);
+            if(err){
+                var error=new myError('No users found!','404');
+                cb([error.message, ' status: ', error.statusCode]);
+            }
              
            else cb(null,docs); 
              } 
            catch(err){
-            cb({message: `${err}`});
+            var error=new myError('An error occurred in searching for the users','500');
+                cb([error.message, ' status: ', error.statusCode]);
             }
         });     
 }
@@ -18,13 +23,17 @@ function getAllUsers(db,cb){
 function getSpecificUser(db,id,o_id,cb){
     try{ 
         db.collection('users').findOne({'_id': o_id},(err,doc) =>{
-        if(!doc) cb(`${err}`);
+        if(!doc){
+        var error=new myError('No user with that id found!','404');
+        cb([error.message, ' status: ', error.statusCode]);
+        }
 
             else cb(null,doc);
         });    
     }
      catch(err){
-        cb({message: `${err}`});
+        var error=new myError('No user with that id found!','404');
+        cb([error.message, ' status: ', error.statusCode]);
     }
 }
 
@@ -32,13 +41,17 @@ function getSpecificUser(db,id,o_id,cb){
 function getAllLandlords(db,cb){
     try{ 
         db.collection('landlords').find({}).toArray(function(err, docs) {
-             if(err) cb(`${err}`);
+             if(err){
+                var error=new myError('No landlords found!','404');
+                cb([error.message, ' status: ', error.statusCode]);
+             } 
             
              else cb(null, docs);
         });     
     } 
     catch(err){
-        cb(`${err}`);
+        var error=new myError('An error occurred in searching for the landlords','500');
+        cb([error.message, ' status: ', error.statusCode]);
     }
 }
 
@@ -46,14 +59,17 @@ function getAllLandlords(db,cb){
 function getSpecificLandlord(db,id,o_id,cb){
     try{ 
         db.collection('landlords').findOne({'_id': o_id},(err,doc) =>{
-        if(!doc) 
-        cb(`${err}`);
+        if(!doc) {
+         var error=new myError('No landlord with that id found!','404');
+        cb([error.message, ' status: ', error.statusCode]);
+        }
 
             else cb(null, doc);
         });    
     }
      catch(err){
-        cb(`${err}`);
+        var error=new myError('No landlord with that id found!','404');
+        cb([error.message, ' status: ', error.statusCode]);
     }
 }
 

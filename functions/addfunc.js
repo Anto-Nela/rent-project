@@ -14,14 +14,18 @@ function addHome(db,req,cb){
     
     try{ 
     db.collection('homes').insertOne(home1,(err,doc) =>{
-    if(!doc) cb(`${err}`);
+    if(!doc){
+        var error=new myError('No home information found','404');
+        cb([error.message, ' status: ', error.statusCode]);
+    }
 
        else cb(null, 'Home added.');
 
     });    
 }
  catch(err){
-    cb(`${err}`);
+    var error=new myError('An error occurred while saving the home information','500');
+        cb([error.message, ' status: ', error.statusCode]);
 }
 }
 
@@ -36,14 +40,18 @@ function addLandlord(db,req,cb){
     
     try{ 
         db.collection('landlords').insertOne(landlord1,(err,doc) =>{
-        if(!doc) cb(`${err}`);
+        if(!doc){
+        var error=new myError('No landlord information found','404');
+        cb([error.message, ' status: ', error.statusCode]);
+        }
 
             cb(null,'Landlord added.');
    
         });    
     }
      catch(err){
-        cb(`${err}`);
+        var error=new myError('An error occurred while saving the landlord information','500');
+        cb([error.message, ' status: ', error.statusCode]);
     }
 }
 

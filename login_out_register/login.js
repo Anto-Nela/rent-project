@@ -41,7 +41,7 @@ function loginUser(db,req,cb){
                              
             transporter.sendMail(mailOptions, function(error, response){
             if(error)  {
-                var error=new myError(`${error}`,'404');
+                var error=new myError('An error occurred while sending the email','404');
                 cb([error.message,' status: ', error.statusCode]);
             }
             
@@ -73,7 +73,10 @@ function loginUser(db,req,cb){
                cb(null,{message: 'Your account has not been verified, please check your email and click on the link to verify your account.',
              token: token, refreshtoken: refreshtoken.token, _id: user._id, username: user.username}); 
              }
-             else cb('You have been logged out, please log in again.');
+             else{
+                var error=new myError('You have been logged out, please log in again.','400');
+                cb([error.message, ' status: ', error.statusCode]);
+             }
              //cb(null,{message: 'Successfully logged in.', token: token});
              //console.log(token3);
          });
@@ -108,7 +111,10 @@ function loginUser(db,req,cb){
                cb(null,{message: 'Sucessfully logged in.',
                 token: token, refreshtoken: refreshtoken.token, _id: user._id, username: user.username}); 
              }
-             else cb('You have been logged out, please log in again.');
+             else{
+                var error=new myError('You have been logged out, please log in again.','400');
+                cb([error.message, ' status: ', error.statusCode]);
+             }
              //cb(null,{message: 'Successfully logged in.', token: token});
              //console.log(token3);
          });
@@ -116,7 +122,7 @@ function loginUser(db,req,cb){
     }
     });       
         } catch(err){
-            var error=new myError(`${err}`,'500');
+            var error=new myError('An error occurred','500');
             cb([error.message,' status: ', error.statusCode]);
     }
 }

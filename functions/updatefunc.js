@@ -10,13 +10,17 @@ var upduser={
 }
 try{
      db.collection('users').updateOne({'_id': o_id},{$set: upduser},(err,doc) =>{
-        if(!doc) cb(`${err}`);
+        if(!doc){
+            var error=new myError('No information to update','404');
+            cb([error.message, ' status: ', error.statusCode]);
+        } 
 
             else cb(null,'User information updated.');
         });   
    }
 catch(err){
-    cb(`${err}`);
+    var error=new myError('An error occurred while updating user information','500');
+    cb([error.message, ' status: ', error.statusCode]);
 }
 }
 
@@ -31,13 +35,17 @@ function updateHome(db,req,id,o_id,cb){
 
     try{
         db.collection('homes').updateOne({'_id': o_id},{$set: updhome},(err,doc) =>{
-            if(!doc) cb(`${err}`);
+            if(!doc) {
+                var error=new myError('No information to update','404');
+                cb([error.message, ' status: ', error.statusCode]);
+            }
     
                 else cb(null,'Home information updated.');
             });   
     }
     catch(err){
-        cb(`${err}`);
+        var error=new myError('An error occurred while updating the home information','500');
+        cb([error.message, ' status: ', error.statusCode]);
     }
 }
 
@@ -52,13 +60,17 @@ function updateLandlord(db,req,id,o_id,cb){
 
     try{
         db.collection('landlords').updateOne({'_id': o_id},{$set: updlandlord},(err,doc) =>{
-            if(!doc) cb(`${err}`);
+            if(!doc) {
+                var error=new myError('No information to update','404');
+                cb([error.message, ' status: ', error.statusCode]);
+            }
     
                 else cb(null,'Landlord information updated.');
             });   
     }
     catch(err){
-        cb(`${err}`);
+        var error=new myError('An error occurred while updating the landlord information','500');
+        cb([error.message, ' status: ', error.statusCode]);
     }
 
 }
