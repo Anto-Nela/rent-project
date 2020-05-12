@@ -1,13 +1,19 @@
 const users=require('../schema/user');
+const myError=require('../error');
 
 //Delete a User
 function deleteUser(db,id,o_id,cb){
     try{ 
         db.collection('users').deleteOne({'_id': o_id},(err,doc) =>{
-        if(!doc) {
+        if(err) {
             var error=new myError('No such user found to delete','404');
             cb([error.message, ' status: ', error.statusCode]);
         }
+
+        if (doc.deletedCount==0){
+            var error=new myError('No such user found to delete','404');
+            cb([error.message, ' status: ', error.statusCode]);
+          }
 
             else cb(null,'User deleted');
         });    
@@ -22,10 +28,15 @@ function deleteUser(db,id,o_id,cb){
 function deleteHome(db,id,o_id,cb){
     try{ 
         db.collection('homes').deleteOne({'_id': o_id},(err,doc) =>{
-            if(!doc) {
+            if(err) {
                 var error=new myError('No such home found to delete','404');
                 cb([error.message, ' status: ', error.statusCode]);
             }
+
+            if (doc.deletedCount==0){
+                var error=new myError('No such home found to delete','404');
+                cb([error.message, ' status: ', error.statusCode]);
+              }
 
             else cb(null,'Home deleted');
         });    
@@ -41,10 +52,15 @@ function deleteHome(db,id,o_id,cb){
 function deleteLandlord(db,id,o_id,cb){
     try{ 
         db.collection('landlords').deleteOne({'_id': o_id},(err,doc) =>{
-            if(!doc){
+            if(err){
                 var error=new myError('No such landlord found to delete','404');
                 cb([error.message, ' status: ', error.statusCode]);
-            }
+              } 
+
+              if (doc.deletedCount==0){
+                var error=new myError('No such landlord found to delete','404');
+                cb([error.message, ' status: ', error.statusCode]);
+              }
 
             else cb(null,'Landlord deleted');
         });    

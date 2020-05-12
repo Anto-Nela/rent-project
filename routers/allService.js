@@ -126,6 +126,7 @@ router.post('/logout', (req, res) => {
     });
   });
 
+  
      //search homes
      router.get("/searchHomes", (req, res) => {
       const maxValue= req.query.cmimiMax;

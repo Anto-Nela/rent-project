@@ -1,3 +1,6 @@
+const users=require('../schema/user');
+const myError=require('../error');
+
 //Add a home
 function addHome(db,req,cb){
     let home1={

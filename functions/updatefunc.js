@@ -1,4 +1,5 @@
 const users=require('../schema/user');
+const myError=require('../error');
 
 //Update user info
 function updateUser(db,req,id,o_id,cb){
