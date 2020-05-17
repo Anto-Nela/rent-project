@@ -16,6 +16,7 @@ const reg= require('../login_out_register/register');
 const lgout= require('../login_out_register/logout');
 const lgin= require('../login_out_register/login');
 const gentk= require('../token_checkacv_generate/refresh_tokens');
+const searchomes=require('../functions/get/searchHomes');
 
 const checkAuth= require('../check-auth');
 const checkActv= require('../token_checkacv_generate/checkacvtoken');
@@ -131,11 +132,11 @@ router.post('/logout', (req, res) => {
      router.get("/searchHomes", (req, res) => {
       const maxValue= req.query.cmimiMax;
       const minValue= req.query.cmimiMin;
-      const qytet= req.query.qytet;
-      const nrrooms= req.query.rooms;
-      //const nrroommates= req.body.roommates;
+      const rruga= req.query.rruga;
+      const nrdhoma= req.query.nrdhoma;
+      const nrpersona= req.query.nrpersona;
   
-      gethomes.searchHomes(db,maxValue,minValue,qytet,nrrooms, (err, json) => {
+      searchomes.searchHomes(db,maxValue,minValue,rruga,nrdhoma,nrpersona, (err, json) => {
         if (err) res.json(err);
         res.json(json);
       });

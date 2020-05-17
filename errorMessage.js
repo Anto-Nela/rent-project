@@ -1,6 +1,6 @@
 const myError=require('./error');
 
-async function Message(db,type, reasoncode,cb){
+async function Message(db,type,reasoncode,cb){
     try{  
      await db.collection('errorcode').findOne({
         'type': type,

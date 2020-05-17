@@ -71,68 +71,7 @@ function findNearMe(lat, long, data) {
         });
       }
   }
-  
-  //searchi
-  function searchHomes(db,maxValue,minValue,qytet,nrrooms,cb){
 
-    minprice = parseInt(minValue, 10);
-    maxprice = parseInt(maxValue, 10);
-    rooms = parseInt(nrrooms, 10);
-   // roommates = parseInt(nrroommates, 10);
-  try{
-   if(rooms==0){
-
-      db.collection("homes").find(
-        { 'adress.qytet': qytet,
-           cmimi: { $gte: minprice, $lte: maxprice }
-      }).toArray((err,doc)=>{
-        if(err){
-          myError.Error(db,'home',200,4,(error,pls)=>{
-            if(error) cb(error);
-            else cb(pls);
-          });  
-        } 
-        if (!doc.length){
-          myError.Error(db,'home',200,4,(error,pls)=>{
-            if(error) cb(error);
-            else cb(pls);
-          });  
-        }
-        else cb(null, doc);
-      });
-
-    }
-    else{
-     
-      db.collection("homes").find(
-      { 'adress.qytet': qytet,
-         cmimi: { $gte: minprice, $lte: maxprice },
-         nr_dhomash: rooms
-    }).toArray((err,doc)=>{
-      if(err){
-        myError.Error(db,'home',200,4,(error,pls)=>{
-          if(error) cb(error);
-          else cb(pls);
-        });
-      }
-      if (!doc.length){
-        myError.Error(db,'home',200,4,(error,pls)=>{
-            if(error) cb(error);
-            else cb(pls);
-          });
-      }
-      else cb(null, doc);
-    });
-    }
-  } 
-  catch(err){
-    myError.Error(db,'get',500,2,(error,pls)=>{
-      if(error) cb(error);
-      else cb(pls);
-    });
-  }
-  }
-  
 
   //Get Specific home
   function getSpecificHome(db,id,o_id,cb){
@@ -316,7 +255,6 @@ exports.findByCity=findByCity;
 exports.findByPrice=findByPrice;
 exports.getAllHomes=getAllHomes;
 exports.getSpecificHome=getSpecificHome;
-exports.searchHomes=searchHomes;
 
 module.exports.findNearMe=findNearMe;
 module.exports.getDistanceFromLatLonInKm=getDistanceFromLatLonInKm;
