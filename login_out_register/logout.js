@@ -11,14 +11,18 @@ function logoutUser(db,req,cb){
     const token=req.headers.authorization.split(' ')[1];
     
     if (!token) {
-        var error=new myError('No token provided.','401');
-        cb([error.message,' status: ', error.statusCode]);
+        myError.Error(db,'token',400,4,(error,pls)=>{
+            if(error) cb(error);
+            else cb(pls);
+          });
     }
         
    db.collection('Tokens').findOne({ token: token}, (err,tokeni1)=>{
         if(err) {
-            var error=new myError(`The token does not exist. ${err}`,'404');
-            cb([error.message,' status: ', error.statusCode]);
+            myError.Error(db,'token',400,4,(error,pls)=>{
+                if(error) cb(error);
+                else cb(pls);
+              });
         }
         
         if(tokeni1.status==='active' ){
@@ -27,8 +31,10 @@ function logoutUser(db,req,cb){
 
              db.collection('Tokens').updateOne({token: token},{$set: tokeni1},(err,doc) =>{
                     if(!doc) {
-                        var error=new myError('No token found','404');
-                        cb([error.message,' status: ', error.statusCode]);
+                        myError.Error(db,'token',400,4,(error,pls)=>{
+                            if(error) cb(error);
+                            else cb(pls);
+                          });
                     }
                         else cb(null, {message: 'You have been logged out'});
                     });   
@@ -39,8 +45,10 @@ function logoutUser(db,req,cb){
     });
     
 } catch(error){
-    var error=new myError('Logout failed.','500');
-    cb([error.message,' status: ', error.statusCode]);
+    myError.Error(db,'logout',500,3,(error,pls)=>{
+        if(error) cb(error);
+        else cb(pls);
+      });
 }
 }
 

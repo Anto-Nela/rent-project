@@ -10,14 +10,18 @@ function postToken(db,uemail,req,res){
         const token=req.headers.authorization.split(' ')[1];
         
         if (!token) {
-            var error=new myError('No token provided.','401');
-            return res.json([error.message,' status: ', error.statusCode]);
+            myError.Error(db,'token',400,4,(error,pls)=>{
+                if(error) cb(error);
+                else cb(pls);
+              });
         }
     
         db.collection('Tokens').findOne({ token: token}, (err,tokeni1)=>{
             if(err){
-                var error=new myError('Something happend...','500');
-                return res.json([error.message,' status: ', error.statusCode]);
+                myError.Error(db,'all',500,4,(error,pls)=>{
+                    if(error) cb(error);
+                    else cb(pls);
+                  });
             } 
 
         if(tokeni1.status=='active'){  
@@ -27,8 +31,10 @@ function postToken(db,uemail,req,res){
                     
             db.collection('Tokens').updateOne({token: token},{$set: tokeni1},(err,doc) =>{
                 if(!doc){
-                    var error=new myError('An error occurred','500');
-                    return res.json([error.message,' status: ', error.statusCode]);
+                    myError.Error(db,'token',500,3,(error,pls)=>{
+                        if(error) cb(error);
+                        else cb(pls);
+                      });
                         }
                     });   
 
@@ -63,8 +69,10 @@ function postToken(db,uemail,req,res){
                     
                     db.collection('Tokens').insertMany([token2,token3],(err, token33)=>{
                         if(err){
-                            error=new myError('Something went wrong in saving the token.','500');
-                            return res.json([error.message,' status: ', error.statusCode]);
+                            myError.Error(db,'token',500,3,(error,pls)=>{
+                                if(error) cb(error);
+                                else cb(pls);
+                              });
                         } 
                     });
 
@@ -72,14 +80,18 @@ function postToken(db,uemail,req,res){
               }
 
         else  {
-            var error=new myError('Token is inactive.','402');
-            return res.json([error.message,' status: ', error.statusCode]);
+            myError.Error(db,'token',400,7,(error,pls)=>{
+                if(error) cb(error);
+                else cb(pls);
+              });
         }
         
     });
     } catch(error){
-        var error=new myError('An error occured','500');
-        return res.json([error.message,' status: ', error.statusCode]);
+        myError.Error(db,'all',500,4,(error,pls)=>{
+            if(error) cb(error);
+            else cb(pls);
+          });
     }
     
 }

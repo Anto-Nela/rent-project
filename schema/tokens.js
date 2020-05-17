@@ -23,5 +23,5 @@ const tokenSchema = mongoose.Schema({
     }
   });
   
-  // export model user with UserSchema
+  // export model user with tokenSchema
   module.exports = mongoose.model('tokens', tokenSchema);

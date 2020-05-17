@@ -39,52 +39,70 @@ const validation=require('../validations/functions');
         var mess3=validation.userNameValidation(req.body.username);
 
         if(mess1!==''){
-            var error=new myError('Email is not valid!','400');
-                cb([error.message, ' status: ', error.statusCode]);
+            myError.Error(db,'email',400,6,(error,pls)=>{
+                if(error) cb(error);
+                else cb(pls);
+              });
         }
         if(mess2!==''){
-            var error=new myError('Password is not valid!','400');
-                cb([error.message, ' status: ', error.statusCode]);
+            myError.Error(db,'password',400,6,(error,pls)=>{
+                if(error) cb(error);
+                else cb(pls);
+              });
         }
         if(mess3!==''){
-            var error=new myError('Username is not valid!','400');
-                cb([error.message, ' status: ', error.statusCode]);
+            myError.Error(db,'username',400,6,(error,pls)=>{
+                if(error) cb(error);
+                else cb(pls);
+              });
         }
 
         try{  
             
             db.collection('users').findOne({ email: req.body.email},(err,user)=>{
                if(err){
-                var error=new myError('An error occurred in searching for that email','500');
-                cb([error.message, ' status: ', error.statusCode]);
+                myError.Error(db,'email',500,2,(error,pls)=>{
+                    if(error) cb(error);
+                    else cb(pls);
+                  });
                }
                 
                if(user){
-                   var error=new myError('Email already exists','400');
-                   cb([error.message, ' status: ', error.statusCode]);
+                myError.Error(db,'email',200,26,(error,pls)=>{
+                    if(error) cb(error);
+                    else cb(pls);
+                  });
                } 
                 
                else { 
                     db.collection('users').findOne({ username: req.body.username}, (err,user2)=>{
                         if(err){
-                            var error=new myError('An error occurred in searching for that username','500');
-                            cb([error.message, ' status: ', error.statusCode]);
+                            myError.Error(db,'username',500,2,(error,pls)=>{
+                                if(error) cb(error);
+                                else cb(pls);
+                              });
                         } 
                          
                         if(user2){
-                            var error=new myError('User with that username already exists','400');
-                            cb([error.message, ' status: ', error.statusCode]);
+                            myError.Error(db,'username',200,26,(error,pls)=>{
+                                if(error) cb(error);
+                                else cb(pls);
+                              });
                         } 
 
                         else{
                             db.collection('users').insertOne(user1,(err,doc) =>{
                                 if(!doc){
-                                var error=new myError('No user to save','500');
-                                cb([error.message, ' status: ', error.statusCode]);
+                                    myError.Error(db,'add',200,6,(error,pls)=>{
+                                        if(error) cb(error);
+                                        else cb(pls);
+                                      });
                                 } 
                                 if(err){
-                                 var error=new myError('An error occurred in saving the user','500');
-                                 cb([error.message, ' status: ', error.statusCode]);
+                                    myError.Error(db,'add',500,2,(error,pls)=>{
+                                        if(error) cb(error);
+                                        else cb(pls);
+                                      });
                                 }
 
                              else {
@@ -108,8 +126,10 @@ const validation=require('../validations/functions');
                                         //insert this in the database: 
                                         db.collection('Tokens').insertMany([token2,refreshtoken],(err, token3)=>{
                                             if(err) {
-                                                error=new myError('Something went wrong in saving the token.','500');
-                                                cb([error.message,' status: ', error.statusCode]);
+                                                myError.Error(db,'token',500,3,(error,pls)=>{
+                                                    if(error) cb(error);
+                                                    else cb(pls);
+                                                  });
                                             }
                                
                 if(token3.token!==null){
@@ -137,8 +157,10 @@ const validation=require('../validations/functions');
                                          
                         transporter.sendMail(mailOptions, function(err, response){
                         if(err){
-                            var error=new myError('an error occurred','500');
-                            cb([error.message, ' status: ', error.statusCode]);
+                            myError.Error(db,'email',500,3,(error,pls)=>{
+                                if(error) cb(error);
+                                else cb(pls);
+                              });
                         }
                         
                         else 
@@ -147,8 +169,10 @@ const validation=require('../validations/functions');
                             
                         });            
                 }  else {
-                 var error=new myError('You have been logged out, please log in again.','400');
-                cb([error.message, ' status: ', error.statusCode]);
+                    myError.Error(db,'token',500,11,(error,pls)=>{
+                        if(error) cb(error);
+                        else cb(pls);
+                      });
                     }             
                 });
               }
@@ -158,8 +182,10 @@ const validation=require('../validations/functions');
     }
  });
  }   catch(err){
-            var error=new myError('An error occurred','500');
-            cb([error.message, ' status: ', error.statusCode]);
+    myError.Error(db,'register',500,3,(error,pls)=>{
+        if(error) cb(error);
+        else cb(pls);
+      });
         }
 }
 

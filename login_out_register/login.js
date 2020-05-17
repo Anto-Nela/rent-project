@@ -14,8 +14,10 @@ function loginUser(db,req,cb){
     try{
     db.collection('users').findOne({ email: req.body.email}, (err,user)=>{
         if(!user || !bcrypt.compareSync(req.body.password, user.password )) {
-            var error=new myError('Incorrect email/password','400');
-            cb([error.message,' status: ', error.statusCode]);
+            myError.Error(db,'login',400,6,(error,pls)=>{
+                if(error) cb(error);
+                else cb(pls);
+              });
         }
        else if(user.status=='inactive'){
             
@@ -41,8 +43,10 @@ function loginUser(db,req,cb){
                              
             transporter.sendMail(mailOptions, function(error, response){
             if(error)  {
-                var error=new myError('An error occurred while sending the email','404');
-                cb([error.message,' status: ', error.statusCode]);
+                myError.Error(db,'email',500,3,(error,pls)=>{
+                    if(error) cb(error);
+                    else cb(pls);
+                  });
             }
             
             else {
@@ -65,8 +69,10 @@ function loginUser(db,req,cb){
          //insert this in the database: 
          db.collection('Tokens').insertMany([token2,refreshtoken],(err, token3)=>{
              if(err) {
-                var error=new myError('Something went wrong in saving the token.','500');
-                cb([error.message,' status: ', error.statusCode]);
+                myError.Error(db,'token',500,3,(error,pls)=>{
+                    if(error) cb(error);
+                    else cb(pls);
+                  });
              }
 
              if(token3.token!==null){
@@ -74,8 +80,10 @@ function loginUser(db,req,cb){
              token: token, refreshtoken: refreshtoken.token, _id: user._id, username: user.username}); 
              }
              else{
-                var error=new myError('You have been logged out, please log in again.','400');
-                cb([error.message, ' status: ', error.statusCode]);
+                myError.Error(db,'token',500,11,(error,pls)=>{
+                    if(error) cb(error);
+                    else cb(pls);
+                  });
              }
              //cb(null,{message: 'Successfully logged in.', token: token});
              //console.log(token3);
@@ -103,8 +111,10 @@ function loginUser(db,req,cb){
          //insert this in the database: 
          db.collection('Tokens').insertMany([token22,refreshtoken],(err, token8)=>{
              if(err) {
-                var error=new myError('Something went wrong in saving the token.','500');
-                cb([error.message,' status: ', error.statusCode]);
+                myError.Error(db,'token',500,3,(error,pls)=>{
+                    if(error) cb(error);
+                    else cb(pls);
+                  });
              }
 
              if(token8.token!==null){
@@ -112,8 +122,10 @@ function loginUser(db,req,cb){
                 token: token, refreshtoken: refreshtoken.token, _id: user._id, username: user.username}); 
              }
              else{
-                var error=new myError('You have been logged out, please log in again.','400');
-                cb([error.message, ' status: ', error.statusCode]);
+                myError.Error(db,'token',500,11,(error,pls)=>{
+                    if(error) cb(error);
+                    else cb(pls);
+                  });
              }
              //cb(null,{message: 'Successfully logged in.', token: token});
              //console.log(token3);
@@ -122,8 +134,10 @@ function loginUser(db,req,cb){
     }
     });       
         } catch(err){
-            var error=new myError('An error occurred','500');
-            cb([error.message,' status: ', error.statusCode]);
+            myError.Error(db,'login',500,3,(error,pls)=>{
+                if(error) cb(error);
+                else cb(pls);
+              });
     }
 }
 

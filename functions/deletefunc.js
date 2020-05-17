@@ -6,21 +6,27 @@ function deleteUser(db,id,o_id,cb){
     try{ 
         db.collection('users').deleteOne({'_id': o_id},(err,doc) =>{
         if(err) {
-            var error=new myError('No such user found to delete','404');
-            cb([error.message, ' status: ', error.statusCode]);
+            myError.Error(db,'delete',200,6,(error,pls)=>{
+                if(error) cb(error);
+                else cb(pls);
+              });
         }
 
         if (doc.deletedCount==0){
-            var error=new myError('No such user found to delete','404');
-            cb([error.message, ' status: ', error.statusCode]);
+            myError.Error(db,'delete',200,6,(error,pls)=>{
+                if(error) cb(error);
+                else cb(pls);
+              });
           }
 
             else cb(null,'User deleted');
         });    
     }
      catch(err){
-        var error=new myError('An error occurred while deleting the user','500');
-        cb([error.message, ' status: ', error.statusCode]);
+        myError.Error(db,'delete',500,2,(error,pls)=>{
+            if(error) cb(error);
+            else cb(pls);
+          });
     }
 }
 
@@ -29,21 +35,27 @@ function deleteHome(db,id,o_id,cb){
     try{ 
         db.collection('homes').deleteOne({'_id': o_id},(err,doc) =>{
             if(err) {
-                var error=new myError('No such home found to delete','404');
-                cb([error.message, ' status: ', error.statusCode]);
+                myError.Error(db,'delete',200,6,(error,pls)=>{
+                    if(error) cb(error);
+                    else cb(pls);
+                  });
             }
 
             if (doc.deletedCount==0){
-                var error=new myError('No such home found to delete','404');
-                cb([error.message, ' status: ', error.statusCode]);
+                myError.Error(db,'delete',200,6,(error,pls)=>{
+                    if(error) cb(error);
+                    else cb(pls);
+                  });
               }
 
             else cb(null,'Home deleted');
         });    
     }
      catch(err){
-        var error=new myError('An error occurred while deleting the home','500');
-        cb([error.message, ' status: ', error.statusCode]);
+        myError.Error(db,'delete',500,2,(error,pls)=>{
+            if(error) cb(error);
+            else cb(pls);
+          });
     }
 }
 
@@ -53,21 +65,27 @@ function deleteLandlord(db,id,o_id,cb){
     try{ 
         db.collection('landlords').deleteOne({'_id': o_id},(err,doc) =>{
             if(err){
-                var error=new myError('No such landlord found to delete','404');
-                cb([error.message, ' status: ', error.statusCode]);
+                myError.Error(db,'delete',200,6,(error,pls)=>{
+                    if(error) cb(error);
+                    else cb(pls);
+                  });
               } 
 
               if (doc.deletedCount==0){
-                var error=new myError('No such landlord found to delete','404');
-                cb([error.message, ' status: ', error.statusCode]);
+                myError.Error(db,'delete',200,6,(error,pls)=>{
+                    if(error) cb(error);
+                    else cb(pls);
+                  });
               }
 
             else cb(null,'Landlord deleted');
         });    
     }
      catch(err){
-        var error=new myError('An error occurred while deleting the landlord','500');
-        cb([error.message, ' status: ', error.statusCode]);
+        myError.Error(db,'delete',500,2,(error,pls)=>{
+            if(error) cb(error);
+            else cb(pls);
+          });
     }
 }
 

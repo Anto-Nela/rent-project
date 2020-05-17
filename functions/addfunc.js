@@ -14,12 +14,14 @@ function addHome(db,req,cb){
         lloji: req.body.lloji,
         nr_dhomash: req.body.nr_dhomash
     }
-    
+
     try{ 
     db.collection('homes').insertOne(home1,(err,doc) =>{
     if(!doc){
-        var error=new myError('No home information found','404');
-        cb([error.message, ' status: ', error.statusCode]);
+        myError.Error(db,'add',200,6,(error,pls)=>{
+            if(error) cb(error);
+            else cb(pls);
+          });
     }
 
        else cb(null, 'Home added.');
@@ -27,10 +29,13 @@ function addHome(db,req,cb){
     });    
 }
  catch(err){
-    var error=new myError('An error occurred while saving the home information','500');
-        cb([error.message, ' status: ', error.statusCode]);
+    myError.Error(db,'add',500,2,(error,pls)=>{
+        if(error) cb(error);
+        else cb(pls);
+      });
 }
 }
+
 
 //Add a landlord
 function addLandlord(db,req,cb){
@@ -44,8 +49,10 @@ function addLandlord(db,req,cb){
     try{ 
         db.collection('landlords').insertOne(landlord1,(err,doc) =>{
         if(!doc){
-        var error=new myError('No landlord information found','404');
-        cb([error.message, ' status: ', error.statusCode]);
+        myError.Error(db,'add',200,6,(error,pls)=>{
+            if(error) cb(error);
+            else cb(pls);
+          });
         }
 
             cb(null,'Landlord added.');
@@ -53,8 +60,10 @@ function addLandlord(db,req,cb){
         });    
     }
      catch(err){
-        var error=new myError('An error occurred while saving the landlord information','500');
-        cb([error.message, ' status: ', error.statusCode]);
+        myError.Error(db,'add',500,2,(error,pls)=>{
+            if(error) cb(error);
+            else cb(pls);
+          });
     }
 }
 
