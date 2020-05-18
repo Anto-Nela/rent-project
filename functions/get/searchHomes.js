@@ -156,6 +156,29 @@ function searchHomes(db,maxValue,minValue,rruga,nrdhoma,nrpersona,cb){
         });
       }
 
+      else if(rruga==''){
+
+        db.collection("homes").find(
+          { cmimi: { $gte: minprice, $lte: maxprice },
+             nr_personash: persona,
+             'nr_dhomash': dhoma
+        }).toArray((err,doc)=>{
+          if(err){
+            myError.Error(db,'home',200,4,(error,pls)=>{
+              if(error) cb(error);
+              else cb(pls);
+            });  
+          } 
+          if (!doc.length){
+            myError.Error(db,'home',200,4,(error,pls)=>{
+              if(error) cb(error);
+              else cb(pls);
+            });  
+          }
+          else cb(null, doc);
+        });
+      }
+
     else{
      
       db.collection("homes").find(
