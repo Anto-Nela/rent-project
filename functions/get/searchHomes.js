@@ -10,9 +10,32 @@ function searchHomes(db,maxValue,minValue,rruga,nrdhoma,nrpersona,cb){
    persona = parseInt(nrpersona, 10);
    
   try{
-   
+    
+//rasti kur useri ve personat (roommates) dhe dhomat 0
+  if(persona==0&&dhoma==0){
+
+      db.collection("homes").find(
+        { 'adress.rruga': {'$regex' : '.*' + rruga + '.*'},
+           cmimi: { $gte: minprice, $lte: maxprice }
+      }).toArray((err,doc)=>{
+        if(err){
+          myError.Error(db,'home',200,4,(error,pls)=>{
+            if(error) cb(error);
+            else cb(pls);
+          });  
+        } 
+        if (!doc.length){
+          myError.Error(db,'home',200,4,(error,pls)=>{
+            if(error) cb(error);
+            else cb(pls);
+          });  
+        }
+        else cb(null, doc);
+      });
+    }
+
     //rasti kur useri ve dhomat 0
-    if(dhoma==0){
+   else if(dhoma==0){
 
       db.collection("homes").find(
         { 'adress.rruga': {'$regex' : '.*' + rruga + '.*'},
@@ -42,30 +65,6 @@ function searchHomes(db,maxValue,minValue,rruga,nrdhoma,nrpersona,cb){
           { 'adress.rruga': {'$regex' : '.*' + rruga + '.*'},
              cmimi: { $gte: minprice, $lte: maxprice },
              'nr_dhomash': dhoma
-        }).toArray((err,doc)=>{
-          if(err){
-            myError.Error(db,'home',200,4,(error,pls)=>{
-              if(error) cb(error);
-              else cb(pls);
-            });  
-          } 
-          if (!doc.length){
-            myError.Error(db,'home',200,4,(error,pls)=>{
-              if(error) cb(error);
-              else cb(pls);
-            });  
-          }
-          else cb(null, doc);
-        });
-      }
-
-
-      //rasti kur useri ve personat (roommates) dhe dhomat 0
-   else if((persona==0) && (dhoma==0) ){
-
-        db.collection("homes").find(
-          { 'adress.rruga': {'$regex' : '.*' + rruga + '.*'},
-             cmimi: { $gte: minprice, $lte: maxprice }
         }).toArray((err,doc)=>{
           if(err){
             myError.Error(db,'home',200,4,(error,pls)=>{
