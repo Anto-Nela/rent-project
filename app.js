@@ -7,7 +7,7 @@ const allservice= require('./routers/allService');
 
 require('dotenv/config');
 
-app.set('view engine', 'ejs');
+//app.set('view engine', 'ejs');
 
    app.use(cors());
    app.use(express.urlencoded({ extended: true }));
