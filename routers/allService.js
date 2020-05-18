@@ -45,7 +45,7 @@ router.post('/register', (req, res) =>{
     reg.regUser(db,req,(err, user)=>{
         if(err) res.json(err);
         
-        res.json(user);
+       else res.json(user);
        });
 });
 
@@ -55,7 +55,7 @@ router.post('/login', (req, res)=>{
 
     lgin.loginUser(db,req,(err, user)=>{
         if(err) res.json(err);
-        res.json(user);
+       else res.json(user);
     });
 });
 
@@ -75,7 +75,7 @@ router.post('/logout', (req, res) => {
 
     lgout.logoutUser(db,req,(err,user)=>{
         if(err) res.json(err);
-        res.json(user);
+       else res.json(user);
     });
   });
 
@@ -86,7 +86,7 @@ router.post('/logout', (req, res) => {
 
       verify.verifyEmail(db,uuid,(err,user)=>{
         if(err) res.json(err);
-        res.json(user);
+       else res.json(user);
       });
   });
 
@@ -96,7 +96,7 @@ router.post('/logout', (req, res) => {
     
     getfunc.getAllUsers(db,(err,json)=>{
         if(err) res.json(err);
-        res.json(json);
+       else res.json(json);
        });
     });
 
@@ -111,7 +111,7 @@ router.post('/logout', (req, res) => {
         
         getfunc.getSpecificUser(db,id,o_id,(err,json)=>{
         if(err) res.json(err);
-        res.json(json);
+       else res.json(json);
     });
     });
    });     
@@ -123,7 +123,7 @@ router.post('/logout', (req, res) => {
     gethomes.getAllHomes(db, (err, json) => {
       if (err) res.json(err);
 
-      res.json(gethomes.findNearMe(lat, long, json));
+     else res.json(gethomes.findNearMe(lat, long, json));
     });
   });
 
@@ -138,7 +138,7 @@ router.post('/logout', (req, res) => {
   
       searchomes.searchHomes(db,maxValue,minValue,rruga,nrdhoma,nrpersona, (err, json) => {
         if (err) res.json(err);
-        res.json(json);
+        else res.json(json);
       });
     });
 
@@ -148,7 +148,7 @@ router.post('/logout', (req, res) => {
     
     gethomes.getPremiumHome(db, (err, json) => {
       if (err) res.json(err);
-      res.json(json);
+     else res.json(json);
     });
   });
   
@@ -157,7 +157,7 @@ router.post('/logout', (req, res) => {
   router.get("/homes/normalHomes", (req, res) => {
     gethomes.getNormalHomes(db, (err, json) => {
       if (err) res.json(err);
-      res.json(json);
+     else res.json(json);
     });
   });
 
@@ -169,7 +169,7 @@ router.post('/logout', (req, res) => {
     
     gethomes.findByCity(db, newCity, (err, json) => {
       if (err) res.json(err);
-      res.json(json);
+     else res.json(json);
     });
   });
 
@@ -181,7 +181,7 @@ router.post('/logout', (req, res) => {
     
    gethomes.findByPrice(db, minValue, maxValue, (err, json) => {
       if (err) res.json(err);
-      res.json(json);
+     else res.json(json);
     });
   });
 
@@ -192,7 +192,7 @@ router.post('/logout', (req, res) => {
 
     gethomes.findByRooms(db, nrooms, (err, json) => {
       if (err) res.json(err);
-      res.json(json);
+     else res.json(json);
     });
   });
 
@@ -202,7 +202,7 @@ router.post('/logout', (req, res) => {
             
       gethomes.getAllHomes(db,(err,json)=>{
         if(err) res.json(err);
-        res.json(json);
+       else res.json(json);
       });     
     });
 
@@ -214,7 +214,7 @@ router.post('/logout', (req, res) => {
         
         gethomes.getSpecificHome(db,id,o_id,(err,json)=>{
             if(err) res.json(err);
-            res.json(json);
+           else res.json(json);
         });
 
     });
@@ -224,7 +224,7 @@ router.post('/logout', (req, res) => {
     router.get('/landlords', (req, res) =>{
         getfunc.getAllLandlords(db,(err,json)=>{
             if(err) res.json(err);
-            res.json(json);
+           else res.json(json);
         });
     });
 
@@ -236,7 +236,7 @@ router.post('/logout', (req, res) => {
 
         getfunc.getSpecificLandlord(db,id,o_id,(err,json)=>{
             if(err) res.json(err);
-            res.json(json);
+           else res.json(json);
         });
     });
 
@@ -250,7 +250,7 @@ router.post('/logout', (req, res) => {
             
             deletefunc.deleteLandlord(db,id,o_id,(err,json)=>{
             if(err) res.json(err);
-            res.json(json);
+           else res.json(json);
         });
 
         });
@@ -267,7 +267,7 @@ router.post('/logout', (req, res) => {
 
             deletefunc.deleteUser(db,id,o_id,(err,json)=>{
             if(err) res.json(err);
-            res.json(json);
+           else res.json(json);
         });
         });
     });
@@ -282,7 +282,7 @@ router.post('/logout', (req, res) => {
             
             deletefunc.deleteHome(db,id,o_id,(err,json)=>{
             if(err) res.json(err);
-            res.json(json);
+           else res.json(json);
         });
         });
     });
@@ -295,7 +295,7 @@ router.post('/logout', (req, res) => {
             
             addfunc.addLandlord(db,req,(err,json)=>{
             if(err) res.json(err);
-            res.json(json);
+           else res.json(json);
            });
          });
     });
@@ -308,7 +308,7 @@ router.post('/logout', (req, res) => {
             
             addfunc.addHome(db,req,(err,json)=>{
             if(err) res.json(err);
-            res.json(json);
+           else res.json(json);
            });
         });
     });
@@ -323,7 +323,7 @@ router.post('/logout', (req, res) => {
            
             updatefunc.updateUser(db,req,id,o_id,(err,json)=>{
             if(err) res.json(err);
-            res.json(json);
+           else res.json(json);
         }); 
         });
     });
@@ -338,7 +338,7 @@ router.post('/logout', (req, res) => {
             
             updatefunc.updateHome(db,req,id,o_id,(err,json)=>{
             if(err) res.json(err);
-            res.json(json);
+           else res.json(json);
         });
         });
     });
@@ -353,7 +353,7 @@ router.post('/logout', (req, res) => {
             
             updatefunc.updateLandlord(db,req,id,o_id,(err,json)=>{
             if(err) res.json(err);
-            res.json(json);
+           else res.json(json);
          });
        });
     });
