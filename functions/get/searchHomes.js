@@ -2,13 +2,14 @@ const users=require('../../schema/user');
 const myError=require('../../error');
 
 //searchi
-function searchHomes(db,maxValue,minValue,rruga,nrdhoma,nrpersona,cb){
+function searchHomes(db,maxValue,minValue,rruga,nrdhoma,nrpersona,faqe,cb){
 
     minprice = parseInt(minValue, 10);
     maxprice = parseInt(maxValue, 10);
     dhoma = parseInt(nrdhoma, 10);
    persona = parseInt(nrpersona, 10);
-   
+   faqja= parseInt(faqe, 10);
+
   try{
 
     if(rruga==''&&dhoma==0&&persona==0){
@@ -27,7 +28,32 @@ function searchHomes(db,maxValue,minValue,rruga,nrdhoma,nrpersona,cb){
             else cb(pls);
           });  
         }
-        else cb(null, doc);
+        
+        else{
+          var j=0;
+          if(faqja%2==1){
+            if(faqja==1){
+              if(doc.length<16){
+                cb(null, doc.slice(0,doc.length));
+              }
+              else {cb(null, doc.slice(0,16)); }
+            }else{
+              if(faqja*16<=doc.length){
+                cb(null,doc.slice((faqja*16)-16,faqja*16));
+              }else{
+                cb(null,doc.slice((faqja*16)-16,doc.length));
+              }
+            }
+          }else{
+            if(faqja*16<=doc.length){
+              cb(null,doc.slice((faqja*16)-16,faqja*16));
+            }
+            else{
+              cb(null,doc.slice((faqja*16)-16,doc.length));
+            }
+          } 
+        } 
+
       });
     }
 
@@ -49,7 +75,32 @@ function searchHomes(db,maxValue,minValue,rruga,nrdhoma,nrpersona,cb){
             else cb(pls);
           });  
         }
-        else cb(null, doc);
+
+        else{
+          var j=0;
+          if(faqja%2==1){
+            if(faqja==1){
+              if(doc.length<16){
+                cb(null, doc.slice(0,doc.length));
+              }
+              else {cb(null, doc.slice(0,16)); }
+            }else{
+              if(faqja*16<=doc.length){
+                cb(null,doc.slice((faqja*16)-16,faqja*16));
+              }else{
+                cb(null,doc.slice((faqja*16)-16,doc.length));
+              }
+            }
+          }else{
+            if(faqja*16<=doc.length){
+              cb(null,doc.slice((faqja*16)-16,faqja*16));
+            }
+            else{
+              cb(null,doc.slice((faqja*16)-16,doc.length));
+            }
+          } 
+        } 
+
       });
     }
 
@@ -70,7 +121,31 @@ function searchHomes(db,maxValue,minValue,rruga,nrdhoma,nrpersona,cb){
             else cb(pls);
           });  
         }
-        else cb(null, doc);
+        
+        else{
+          var j=0;
+          if(faqja%2==1){
+            if(faqja==1){
+              if(doc.length<16){
+                cb(null, doc.slice(0,doc.length));
+              }
+              else {cb(null, doc.slice(0,16)); }
+            }else{
+              if(faqja*16<=doc.length){
+                cb(null,doc.slice((faqja*16)-16,faqja*16));
+              }else{
+                cb(null,doc.slice((faqja*16)-16,doc.length));
+              }
+            }
+          }else{
+            if(faqja*16<=doc.length){
+              cb(null,doc.slice((faqja*16)-16,faqja*16));
+            }
+            else{
+              cb(null,doc.slice((faqja*16)-16,doc.length));
+            }
+          } 
+        } 
       });
 
     }
@@ -94,7 +169,32 @@ else if(persona==0&&dhoma==0){
             else cb(pls);
           });  
         }
-        else cb(null, doc);
+
+        else{
+          var j=0;
+          if(faqja%2==1){
+            if(faqja==1){
+              if(doc.length<16){
+                cb(null, doc.slice(0,doc.length));
+              }
+              else {cb(null, doc.slice(0,16)); }
+            }else{
+              if(faqja*16<=doc.length){
+                cb(null,doc.slice((faqja*16)-16,faqja*16));
+              }else{
+                cb(null,doc.slice((faqja*16)-16,doc.length));
+              }
+            }
+          }else{
+            if(faqja*16<=doc.length){
+              cb(null,doc.slice((faqja*16)-16,faqja*16));
+            }
+            else{
+              cb(null,doc.slice((faqja*16)-16,doc.length));
+            }
+          } 
+        } 
+
       });
     }
 
@@ -117,7 +217,32 @@ else if(persona==0&&dhoma==0){
             else cb(pls);
           });  
         }
-        else cb(null, doc);
+       
+        else{
+          var j=0;
+          if(faqja%2==1){
+            if(faqja==1){
+              if(doc.length<16){
+                cb(null, doc.slice(0,doc.length));
+              }
+              else {cb(null, doc.slice(0,16)); }
+            }else{
+              if(faqja*16<=doc.length){
+                cb(null,doc.slice((faqja*16)-16,faqja*16));
+              }else{
+                cb(null,doc.slice((faqja*16)-16,doc.length));
+              }
+            }
+          }else{
+            if(faqja*16<=doc.length){
+              cb(null,doc.slice((faqja*16)-16,faqja*16));
+            }
+            else{
+              cb(null,doc.slice((faqja*16)-16,doc.length));
+            }
+          } 
+        } 
+
       });
     }
 
@@ -142,7 +267,32 @@ else if(persona==0&&dhoma==0){
             else cb(pls);
           });  
         }
-        else cb(null, doc);
+        
+        else{
+          var j=0;
+          if(faqja%2==1){
+            if(faqja==1){
+              if(doc.length<16){
+                cb(null, doc.slice(0,doc.length));
+              }
+              else {cb(null, doc.slice(0,16)); }
+            }else{
+              if(faqja*16<=doc.length){
+                cb(null,doc.slice((faqja*16)-16,faqja*16));
+              }else{
+                cb(null,doc.slice((faqja*16)-16,doc.length));
+              }
+            }
+          }else{
+            if(faqja*16<=doc.length){
+              cb(null,doc.slice((faqja*16)-16,faqja*16));
+            }
+            else{
+              cb(null,doc.slice((faqja*16)-16,doc.length));
+            }
+          } 
+        } 
+
       });
     }
 
@@ -166,7 +316,32 @@ else if(persona==0&&dhoma==0){
               else cb(pls);
             });  
           }
-          else cb(null, doc);
+
+          else{
+            var j=0;
+            if(faqja%2==1){
+              if(faqja==1){
+                if(doc.length<16){
+                  cb(null, doc.slice(0,doc.length));
+                }
+                else {cb(null, doc.slice(0,16)); }
+              }else{
+                if(faqja*16<=doc.length){
+                  cb(null,doc.slice((faqja*16)-16,faqja*16));
+                }else{
+                  cb(null,doc.slice((faqja*16)-16,doc.length));
+                }
+              }
+            }else{
+              if(faqja*16<=doc.length){
+                cb(null,doc.slice((faqja*16)-16,faqja*16));
+              }
+              else{
+                cb(null,doc.slice((faqja*16)-16,doc.length));
+              }
+            } 
+          } 
+
         });
       }
 
@@ -191,7 +366,32 @@ else if(persona==0&&dhoma==0){
             else cb(pls);
           });  
         }
-        else cb(null, doc);
+
+        else{
+          var j=0;
+          if(faqja%2==1){
+            if(faqja==1){
+              if(doc.length<16){
+                cb(null, doc.slice(0,doc.length));
+              }
+              else {cb(null, doc.slice(0,16)); }
+            }else{
+              if(faqja*16<=doc.length){
+                cb(null,doc.slice((faqja*16)-16,faqja*16));
+              }else{
+                cb(null,doc.slice((faqja*16)-16,doc.length));
+              }
+            }
+          }else{
+            if(faqja*16<=doc.length){
+              cb(null,doc.slice((faqja*16)-16,faqja*16));
+            }
+            else{
+              cb(null,doc.slice((faqja*16)-16,doc.length));
+            }
+          } 
+        } 
+
       });
     }
 
@@ -216,7 +416,32 @@ else if(persona==0&&dhoma==0){
               else cb(pls);
             });  
           }
-          else cb(null, doc);
+
+          else{
+            var j=0;
+            if(faqja%2==1){
+              if(faqja==1){
+                if(doc.length<16){
+                  cb(null, doc.slice(0,doc.length));
+                }
+                else {cb(null, doc.slice(0,16)); }
+              }else{
+                if(faqja*16<=doc.length){
+                  cb(null,doc.slice((faqja*16)-16,faqja*16));
+                }else{
+                  cb(null,doc.slice((faqja*16)-16,doc.length));
+                }
+              }
+            }else{
+              if(faqja*16<=doc.length){
+                cb(null,doc.slice((faqja*16)-16,faqja*16));
+              }
+              else{
+                cb(null,doc.slice((faqja*16)-16,doc.length));
+              }
+            } 
+          } 
+
         });
       }
 
@@ -240,7 +465,32 @@ else if(persona==0&&dhoma==0){
               else cb(pls);
             });  
           }
-          else cb(null, doc);
+
+          else{
+            var j=0;
+            if(faqja%2==1){
+              if(faqja==1){
+                if(doc.length<16){
+                  cb(null, doc.slice(0,doc.length));
+                }
+                else {cb(null, doc.slice(0,16)); }
+              }else{
+                if(faqja*16<=doc.length){
+                  cb(null,doc.slice((faqja*16)-16,faqja*16));
+                }else{
+                  cb(null,doc.slice((faqja*16)-16,doc.length));
+                }
+              }
+            }else{
+              if(faqja*16<=doc.length){
+                cb(null,doc.slice((faqja*16)-16,faqja*16));
+              }
+              else{
+                cb(null,doc.slice((faqja*16)-16,doc.length));
+              }
+            } 
+          } 
+
         });
       }
 
@@ -264,7 +514,32 @@ else if(persona==0&&dhoma==0){
             else cb(pls);
           });
       }
-      else cb(null, doc);
+      
+      else{
+        var j=0;
+        if(faqja%2==1){
+          if(faqja==1){
+            if(doc.length<16){
+              cb(null, doc.slice(0,doc.length));
+            }
+            else {cb(null, doc.slice(0,16)); }
+          }else{
+            if(faqja*16<=doc.length){
+              cb(null,doc.slice((faqja*16)-16,faqja*16));
+            }else{
+              cb(null,doc.slice((faqja*16)-16,doc.length));
+            }
+          }
+        }else{
+          if(faqja*16<=doc.length){
+            cb(null,doc.slice((faqja*16)-16,faqja*16));
+          }
+          else{
+            cb(null,doc.slice((faqja*16)-16,doc.length));
+          }
+        } 
+      } 
+      
     });
     }
   } 

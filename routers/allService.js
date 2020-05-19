@@ -129,15 +129,19 @@ router.post('/logout', (req, res) => {
 
   
      //search homes
-     router.get("/searchHomes", (req, res) => {
+     router.get("/searchHomes/:faqe", (req, res) => {
       const maxValue= req.query.cmimiMax;
       const minValue= req.query.cmimiMin;
       const rruga= req.query.rruga;
       const nrdhoma= req.query.nrdhoma;
       const nrpersona= req.query.nrpersona;
+      const fq=req.params.faqe;
   
-      searchomes.searchHomes(db,maxValue,minValue,rruga,nrdhoma,nrpersona, (err, json) => {
-        if (err) res.json(err);
+      searchomes.searchHomes(db,maxValue,minValue,rruga,nrdhoma,nrpersona,fq, (err, json) => {
+        if (err){
+          //const code= err.statusCode+err.reasonCode;
+          res.json(err);
+        } 
         else res.json(json);
       });
     });
