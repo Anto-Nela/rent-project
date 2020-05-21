@@ -11,16 +11,16 @@ function postToken(db,uemail,req,res){
         
         if (!token) {
             myError.Error(db,'token',400,4,(error,pls)=>{
-                if(error) cb(error);
-                else cb(pls);
+                if(error) res.json(error);
+                else res.json(pls);
               });
         }
     
         db.collection('Tokens').findOne({ token: token}, (err,tokeni1)=>{
             if(err){
                 myError.Error(db,'all',500,4,(error,pls)=>{
-                    if(error) cb(error);
-                    else cb(pls);
+                    if(error) res.json(error);
+                    else res.json(pls);
                   });
             } 
 
@@ -32,8 +32,8 @@ function postToken(db,uemail,req,res){
             db.collection('Tokens').updateOne({token: token},{$set: tokeni1},(err,doc) =>{
                 if(!doc){
                     myError.Error(db,'token',500,3,(error,pls)=>{
-                        if(error) cb(error);
-                        else cb(pls);
+                        if(error) res.json(error);
+                        else res.json(pls);
                       });
                         }
                     });   
@@ -70,8 +70,8 @@ function postToken(db,uemail,req,res){
                     db.collection('Tokens').insertMany([token2,token3],(err, token33)=>{
                         if(err){
                             myError.Error(db,'token',500,3,(error,pls)=>{
-                                if(error) cb(error);
-                                else cb(pls);
+                                if(error) res.json(error);
+                                else res.json(pls);
                               });
                         } 
                     });
@@ -81,16 +81,16 @@ function postToken(db,uemail,req,res){
 
         else  {
             myError.Error(db,'token',400,7,(error,pls)=>{
-                if(error) cb(error);
-                else cb(pls);
+                if(error) res.json(error);
+                else res.json(pls);
               });
         }
         
     });
     } catch(error){
         myError.Error(db,'all',500,4,(error,pls)=>{
-            if(error) cb(error);
-            else cb(pls);
+            if(error) res.json(error);
+            else res.json(pls);
           });
     }
     
