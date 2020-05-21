@@ -1,5 +1,7 @@
 const users=require('../schema/user');
 const myError=require('../error');
+const multer= require('multer');
+const fs= require('fs');
 
 //Update user info
 function updateUser(db,req,id,o_id,cb){
@@ -32,10 +34,20 @@ catch(err){
 //Update home info
 function updateHome(db,req,id,o_id,cb){
     let updhome={
-        img: req.body.img,
-        description: req.body.description,
-        cmimi: req.body.cmimi,
-        renting: req.body.renting,
+        //img: req.body.img,
+        perfshihen: req.body.perfshihen,
+        nr_banjosh: req.body.nr_banjosh,
+        nr_bedrooms: req.body.nr_bedrooms,
+        nr_personash: req.body.nr_personash,
+        parkim: req.body.parkim,
+        ashensor: req.body.ashensor,
+        kondicioner: req.body.kondicioner,
+        kafshe: req.body.kafshe,
+        ballkon: req.body.ballkon,
+        kopsht: req.body.kopsht,
+        sendeGatimi: req.body.sendeGatimi,
+        televizor: req.body.televizor,
+        description: req.body.description
     }
 
     try{
@@ -57,6 +69,48 @@ function updateHome(db,req,id,o_id,cb){
           });
     }
 }
+
+//Update image
+function addimagetoHome(db,req,cb){
+   
+   var img = fs.readFileSync(req.file.path,'base64', function(err, data) {
+    if (err){
+        myError.Error(db,'update',200,6,(error,pls)=>{
+            if(error) cb(error);
+            else cb(pls);
+         });
+    }
+    console.log(data);
+  });
+  
+  var finalImg = {
+      contentType: req.file.mimetype,
+      image:  new Buffer(img, 'base64')
+   };
+  
+   try{
+       db.collection('imagetester').insertOne(finalImg, (err, result) => {
+           if (err){
+               myError.Error(db,'update',200,6,(error,pls)=>{
+                   if(error) cb(error);
+                   else cb(pls);
+                });
+            }
+            else{
+                console.log(result);
+                console.log('Saved to database.');
+                cb(null,result);
+            }
+        });
+    }catch(error){
+        myError.Error(db,'update',500,2,(error,pls)=>{
+            if(error) cb(error);
+            else cb(pls);
+          });
+    }
+}
+
+
 
 //Update landlord info
 function updateLandlord(db,req,id,o_id,cb){
@@ -92,3 +146,4 @@ function updateLandlord(db,req,id,o_id,cb){
 exports.updateUser=updateUser;
 exports.updateHome=updateHome;
 exports.updateLandlord=updateLandlord;
+exports.addimagetoHome=addimagetoHome;

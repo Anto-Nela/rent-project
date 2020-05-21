@@ -2,17 +2,15 @@ const users=require('../schema/user');
 const myError=require('../error');
 
 //Add a home
-function addHome(db,req,cb){
+function addHome(db,req,res,cb){
     let home1={
-        img: req.body.img,
-        description: req.body.description,
-        past_refernces: req.body.past_refernces,
-        cmimi: req.body.cmimi,
+        //img: req.body.img, 
         adress: req.body.adress,
-        renting: req.body.renting,
-        siperfaqa: req.body.siperfaqa,
+        sip: req.body.sip,
+        nr_dhomash: req.body.nr_dhomash,
         lloji: req.body.lloji,
-        nr_dhomash: req.body.nr_dhomash
+        kati: req.body.kati,
+        cmimi: req.body.cmimi
     }
 
     try{ 

@@ -4,8 +4,8 @@ const mongoose = require('mongoose');
 const mongodb = require('mongodb');
 const multer= require('multer');
 const ejs=require('ejs');
-//const apiAdapter = require("./apiAdapter");
 var router = express.Router();
+const fs= require('fs');
 
 const getfunc = require('../functions/get/getfunc');
 const gethomes= require('../functions/get/gethomes');
@@ -23,9 +23,6 @@ const checkActv= require('../token_checkacv_generate/checkacvtoken');
 const verify=require('../verify_email/verify');
 
 require('dotenv/config');
-//const BASE_URL = "https://rent-project.herokuapp.com";
-//const api = apiAdapter(BASE_URL);
-
 
 //Connect to DB
 const MongoClient =require('mongodb').MongoClient;
@@ -47,6 +44,37 @@ router.post('/register', (req, res) =>{
         
        else res.json(user);
        });
+});
+
+/*
+//Show the html
+router.get('/',function(req, res){
+  res.sendFile(__dirname +'/index.html');
+});
+*/
+ // SET STORAGE for storing photos
+ var storage = multer.diskStorage({
+  /* destination: function (req, file, cb) {
+     cb(null,file.originalname);
+   },
+   */
+   filename: function (req, file, cb) {
+     cb(null, file.originalname)
+   }
+ });
+ var upload = multer({ storage: storage });
+
+ //Add a picture to a home (add an /:id later to find where to save it)
+ router.post('/upload/photo',checkAuth, upload.single('myImage'), (req, res) => {
+  //const id = req.params.id;
+  //var o_id = new mongodb.ObjectID(id);
+  checkActv.checkActive(db,req,res,()=>{ 
+            
+    updatefunc.addimagetoHome(db,req,(err,json)=>{
+    if(err) res.json(err);
+   else res.json(json);
+});
+});
 });
 
 
@@ -310,7 +338,7 @@ router.post('/logout', (req, res) => {
         
         checkActv.checkActive(db,req,res,()=>{ 
             
-            addfunc.addHome(db,req,(err,json)=>{
+            addfunc.addHome(db,req,res,(err,json)=>{
             if(err) res.json(err);
            else res.json(json);
            });
