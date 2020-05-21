@@ -10,7 +10,20 @@ function addHome(db,req,res,cb){
         nr_dhomash: req.body.nr_dhomash,
         lloji: req.body.lloji,
         kati: req.body.kati,
-        cmimi: req.body.cmimi
+        cmimi: req.body.cmimi,
+        perfshihen: req.body.perfshihen,
+        nr_banjosh: req.body.nr_banjosh,
+        nr_bedrooms: req.body.nr_bedrooms,
+        nr_personash: req.body.nr_personash,
+        parkim: req.body.parkim,
+        ashensor: req.body.ashensor,
+        kondicioner: req.body.kondicioner,
+        kafshe: req.body.kafshe,
+        ballkon: req.body.ballkon,
+        kopsht: req.body.kopsht,
+        sendeGatimi: req.body.sendeGatimi,
+        televizor: req.body.televizor,
+        description: req.body.description
     }
 
     try{ 

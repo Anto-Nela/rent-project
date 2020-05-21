@@ -35,6 +35,12 @@ catch(err){
 function updateHome(db,req,id,o_id,cb){
     let updhome={
         //img: req.body.img,
+        adress: req.body.adress,
+        sip: req.body.sip,
+        nr_dhomash: req.body.nr_dhomash,
+        lloji: req.body.lloji,
+        kati: req.body.kati,
+        cmimi: req.body.cmimi,
         perfshihen: req.body.perfshihen,
         nr_banjosh: req.body.nr_banjosh,
         nr_bedrooms: req.body.nr_bedrooms,
