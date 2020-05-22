@@ -7,7 +7,7 @@ async function Message(db,type,reasoncode,cb){
         'reasonCode': reasoncode
       },(err,doc) =>{
         if (err) cb('Error');
-          else  cb (null,doc.message);
+          else cb(null,doc.message);
       });
   }
    catch(err){

@@ -2,57 +2,60 @@ const users=require('../../schema/user');
 const myError=require('../../error');
 
 //find near me
-function findNearMe(lat, long, data) {
-    const nearMeHomes = [];
-    lat = parseFloat(lat);
-    long = parseFloat(long);
-  
+async function findNearMe(db,lati,longi,data,cb) {
+  var nearMeHomes = [];
+    lat = parseFloat(lati);
+    long = parseFloat(longi);
+
     try{
-    data.forEach((item) => {
-      const elem = getDistanceFromLatLonInKm(
-        lat,
-        long,
-        item.location.lat,
-        item.location.long
-      );
-      if (elem <= 2) {
-        nearMeHomes.push(item);
-      }
-    });
-    return nearMeHomes;
-    }
-    catch(err){
+    var len=data.length-1;
+    var c=0;
+    data.forEach( (item) => {
+      len=len-1; 
+      c=c+1;
+      elem1= getDistanceFromLatLonInKm(lat,long,
+        item.location.lat,item.location.long);
+        elem=elem1.then((nr)=>{
+          elem=nr;
+          if (elem>2) {
+             return;
+            }
+            else {
+              nearMeHomes.push(item);
+            }
+        });
+            if(len===1&& item.length==0){
+              if(nearMeHomes.length==0) {
+           cb(null,'No homes nearby found');
+          }
+          else cb(null,nearMeHomes);
+        }
+        });
+    }catch(err){
       myError.Error(db,'get',500,2,(error,pls)=>{
         if(error) cb(error);
-        else cb(pls);
+        else cb(pls); 
       });
-    }
+      }
   }
 
   function deg2rad(deg) {
     return deg * (Math.PI / 180);
   }
 
-  function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-    try{
+  async function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
     var R = 6371; // Radius of the earth in km
     var dLat = deg2rad(lat2 - lat1); // deg2rad below
     var dLon = deg2rad(lon2 - lon1);
     var a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+     ( Math.sin(dLat / 2) * Math.sin(dLat / 2) +
       Math.cos(deg2rad(lat1)) *
         Math.cos(deg2rad(lat2)) *
         Math.sin(dLon / 2) *
-        Math.sin(dLon / 2);
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        Math.sin(dLon / 2));
+    var c =( 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
     var d = R * c; // Distance in km
     return d;
-  } catch(err){
-      myError.Error(db,'get',500,2,(error,pls)=>{
-        if(error) cb(error);
-        else cb(pls);
-      });
-    }
   }
   
   
@@ -262,5 +265,4 @@ exports.findByPrice=findByPrice;
 exports.getAllHomes=getAllHomes;
 exports.getSpecificHome=getSpecificHome;
 
-module.exports.findNearMe=findNearMe;
-module.exports.getDistanceFromLatLonInKm=getDistanceFromLatLonInKm;
+exports.findNearMe=findNearMe;

@@ -148,10 +148,14 @@ router.post('/logout', (req, res) => {
    router.get("/nearme/:lat/:long", (req, res) => {
     const lat = req.params.lat;
     const long = req.params.long;
-    gethomes.getAllHomes(db, (err, json) => {
+    gethomes.getAllHomes(db, (err, jsoni) => {
       if (err) res.json(err);
-
-     else res.json(gethomes.findNearMe(lat, long, json));
+     else{
+       gethomes.findNearMe(db,lat,long,jsoni,(err,info)=>{
+        if (err) res.json(err);
+        else res.json(info);
+       });
+     } 
     });
   });
 
