@@ -15,11 +15,11 @@ function findNearMe(lat, long, data) {
         item.location.lat,
         item.location.long
       );
-  
       if (elem <= 2) {
         nearMeHomes.push(item);
       }
     });
+    return nearMeHomes;
     }
     catch(err){
       myError.Error(db,'get',500,2,(error,pls)=>{
@@ -27,7 +27,6 @@ function findNearMe(lat, long, data) {
         else cb(pls);
       });
     }
-    return nearMeHomes;
   }
 
   function deg2rad(deg) {
@@ -35,6 +34,7 @@ function findNearMe(lat, long, data) {
   }
 
   function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+    try{
     var R = 6371; // Radius of the earth in km
     var dLat = deg2rad(lat2 - lat1); // deg2rad below
     var dLon = deg2rad(lon2 - lon1);
@@ -47,6 +47,12 @@ function findNearMe(lat, long, data) {
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     var d = R * c; // Distance in km
     return d;
+  } catch(err){
+      myError.Error(db,'get',500,2,(error,pls)=>{
+        if(error) cb(error);
+        else cb(pls);
+      });
+    }
   }
   
   
