@@ -22,23 +22,25 @@ function addHome(db,req,res,cb){
     let home1={
         //img: finalImg, 
         adress: req.body.adress,
-        sip: req.body.sip,
-        nr_dhomash: req.body.nr_dhomash,
-        lloji: req.body.lloji,
-        kati: req.body.kati,
-        cmimi: req.body.cmimi,
-        perfshihen: req.body.perfshihen,
-        nr_banjosh: req.body.nr_banjosh,
-        nr_bedrooms: req.body.nr_bedrooms,
-        nr_personash: req.body.nr_personash,
-        parkim: req.body.parkim,
-        ashensor: req.body.ashensor,
-        kondicioner: req.body.kondicioner,
-        kafshe: req.body.kafshe,
-        ballkon: req.body.ballkon,
-        kopsht: req.body.kopsht,
-        sendeGatimi: req.body.sendeGatimi,
-        televizor: req.body.televizor,
+        area: req.body.area,
+        rooms: req.body.rooms,
+        type: req.body.type,
+        floor: req.body.floor,
+        price: req.body.price,
+        included: req.body.included,
+        bathrooms: req.body.bathrooms,
+        bedrooms: req.body.bedrooms,
+        tenants: req.body.tenants,
+        parking: req.body.parking,
+        elevator: req.body.elevator,
+        air_conditioner: req.body.air_conditioner,
+        animals: req.body.animals,
+        balcony: req.body.balcony,
+        garden: req.body.garden,
+        kitchenware: req.body.kitchenware,
+        tv: req.body.tv,
+        furnished: req.body.furnished,
+        premium: req.body.premium,
         description: req.body.description
     }
 
@@ -67,7 +69,7 @@ function addHome(db,req,res,cb){
 //Add a landlord
 function addLandlord(db,req,cb){
     let landlord1={
-        email: req.body.email,
+    email: req.body.email,
     password: req.body.password,
     username: req.body.username,
     owned: req.body.owned
@@ -93,7 +95,6 @@ function addLandlord(db,req,cb){
           });
     }
 }
-
 
 
 exports.addHome=addHome;

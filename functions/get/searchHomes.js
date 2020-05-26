@@ -14,7 +14,7 @@ function searchHomes(db,maxValue,minValue,rruga,nrdhoma,nrpersona,faqe,cb){
 
     if(rruga==''&&dhoma==0&&persona==0){
       db.collection("homes").find(
-        { cmimi: { $gte: minprice, $lte: maxprice }
+        { price: { $gte: minprice, $lte: maxprice }
       }).toArray((err,doc)=>{
         if(err){
           myError.Error(db,'home',200,4,(error,pls)=>{
@@ -60,8 +60,8 @@ function searchHomes(db,maxValue,minValue,rruga,nrdhoma,nrpersona,faqe,cb){
 
     else if(rruga==''&&dhoma==0){
       db.collection("homes").find(
-        { cmimi: { $gte: minprice, $lte: maxprice },
-           nr_personash: persona
+        { price: { $gte: minprice, $lte: maxprice },
+        tenants: persona
       }).toArray((err,doc)=>{
         if(err){
           myError.Error(db,'home',200,4,(error,pls)=>{
@@ -106,8 +106,8 @@ function searchHomes(db,maxValue,minValue,rruga,nrdhoma,nrpersona,faqe,cb){
 
     else if(rruga==''&&persona==0){
       db.collection("homes").find(
-        { cmimi: { $gte: minprice, $lte: maxprice },
-           'nr_dhomash': dhoma
+        { price: { $gte: minprice, $lte: maxprice },
+          rooms: dhoma
       }).toArray((err,doc)=>{
         if(err){
           myError.Error(db,'home',200,4,(error,pls)=>{
@@ -154,8 +154,8 @@ function searchHomes(db,maxValue,minValue,rruga,nrdhoma,nrpersona,faqe,cb){
 else if(persona==0&&dhoma==0){
 
       db.collection("homes").find(
-        { 'adress.rruga': {'$regex' : '.*' + rruga + '.*'},
-           cmimi: { $gte: minprice, $lte: maxprice }
+        { 'adress.street': {'$regex' : '.*' + rruga + '.*'},
+        price: { $gte: minprice, $lte: maxprice }
       }).toArray((err,doc)=>{
         if(err){
           myError.Error(db,'home',200,4,(error,pls)=>{
@@ -201,9 +201,9 @@ else if(persona==0&&dhoma==0){
     else if(rruga==''){
 
       db.collection("homes").find(
-        { cmimi: { $gte: minprice, $lte: maxprice },
-           nr_personash: persona,
-           'nr_dhomash': dhoma
+        { price: { $gte: minprice, $lte: maxprice },
+            tenants: persona,
+            rooms: dhoma
       }).toArray((err,doc)=>{
         if(err){
           myError.Error(db,'home',200,4,(error,pls)=>{
@@ -251,9 +251,9 @@ else if(persona==0&&dhoma==0){
    else if(dhoma==0){
 
       db.collection("homes").find(
-        { 'adress.rruga': {'$regex' : '.*' + rruga + '.*'},
-           cmimi: { $gte: minprice, $lte: maxprice },
-           nr_personash: persona
+        { 'adress.street': {'$regex' : '.*' + rruga + '.*'},
+           price: { $gte: minprice, $lte: maxprice },
+           tenants: persona
       }).toArray((err,doc)=>{
         if(err){
           myError.Error(db,'home',200,4,(error,pls)=>{
@@ -300,9 +300,9 @@ else if(persona==0&&dhoma==0){
    else if(persona==0){
 
         db.collection("homes").find(
-          { 'adress.rruga': {'$regex' : '.*' + rruga + '.*'},
-             cmimi: { $gte: minprice, $lte: maxprice },
-             'nr_dhomash': dhoma
+          { 'adress.street': {'$regex' : '.*' + rruga + '.*'},
+          price: { $gte: minprice, $lte: maxprice },
+          rooms: dhoma
         }).toArray((err,doc)=>{
           if(err){
             myError.Error(db,'home',200,4,(error,pls)=>{
@@ -349,10 +349,10 @@ else if(persona==0&&dhoma==0){
      else if(dhoma==4 && persona==4){
 
       db.collection("homes").find(
-        { 'adress.rruga': {'$regex' : '.*' + rruga + '.*'},
-           cmimi: { $gte: minprice, $lte: maxprice },
-           'nr_personash': {$gte:3},
-           'nr_dhomash': {$gte:3}
+        { 'adress.street': {'$regex' : '.*' + rruga + '.*'},
+        price: { $gte: minprice, $lte: maxprice },
+             tenants: {$gte:3},
+             rooms: {$gte:3}
       }).toArray((err,doc)=>{
         if(err){
           myError.Error(db,'home',200,4,(error,pls)=>{
@@ -399,10 +399,10 @@ else if(persona==0&&dhoma==0){
      else if(dhoma==4){
 
         db.collection("homes").find(
-          { 'adress.rruga': {'$regex' : '.*' + rruga + '.*'},
-             cmimi: { $gte: minprice, $lte: maxprice },
-             'nr_personash': persona,
-             'nr_dhomash': {$gte:3}
+          { 'adress.street': {'$regex' : '.*' + rruga + '.*'},
+              price: { $gte: minprice, $lte: maxprice },
+              tenants: persona,
+              rooms: {$gte:3}
         }).toArray((err,doc)=>{
           if(err){
             myError.Error(db,'home',200,4,(error,pls)=>{
@@ -448,10 +448,10 @@ else if(persona==0&&dhoma==0){
      else if(persona==4){
 
         db.collection("homes").find(
-          { 'adress.rruga': {'$regex' : '.*' + rruga + '.*'},
-             cmimi: { $gte: minprice, $lte: maxprice },
-             'nr_personash': {$gte:3},
-             'nr_dhomash': dhoma
+          { 'adress.street': {'$regex' : '.*' + rruga + '.*'},
+            price: { $gte: minprice, $lte: maxprice },
+               tenants: {$gte:3},
+               rooms: dhoma
         }).toArray((err,doc)=>{
           if(err){
             myError.Error(db,'home',200,4,(error,pls)=>{
@@ -497,10 +497,10 @@ else if(persona==0&&dhoma==0){
     else{
      
       db.collection("homes").find(
-      { 'adress.rruga': {'$regex' : '.*' + rruga + '.*'},
-         cmimi: { $gte: minprice, $lte: maxprice },
-         'nr_dhomash': dhoma,
-         'nr_personash': persona
+      { 'adress.street': {'$regex' : '.*' + rruga + '.*'},
+         price: { $gte: minprice, $lte: maxprice },
+         rooms: dhoma,
+          tenants: persona
     }).toArray((err,doc)=>{
       if(err){
         myError.Error(db,'home',200,4,(error,pls)=>{

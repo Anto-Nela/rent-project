@@ -171,10 +171,7 @@ router.post('/logout', (req, res) => {
       const fq=req.params.faqe;
   
       searchomes.searchHomes(db,maxValue,minValue,rruga,nrdhoma,nrpersona,fq, (err, json) => {
-        if (err){
-          //const code= err.statusCode+err.reasonCode;
-          res.json(err);
-        } 
+       if (err) res.json(err);
         else res.json(json);
       });
     });

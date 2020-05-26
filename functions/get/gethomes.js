@@ -149,37 +149,7 @@ const myError=require('../../error');
           else cb(pls);
         });
       }
-    }
-    
-
-    //Find by city
-    function findByCity(db, place, cb) {
-      try {
-        db.collection("homes")
-          .find({ "adress.qytet": place })
-          .toArray(function (err, docs) {
-            if (err){
-              myError.Error(db,'home',200,4,(error,pls)=>{
-                if(error) cb(error);
-                else cb(pls);
-              });
-            }
-            if (!docs.length){
-              myError.Error(db,'home',200,4,(error,pls)=>{
-                if(error) cb(error);
-                else cb(pls);
-              });
-            }
-            else cb(null, docs);
-          });
-      } catch (err) {
-        myError.Error(db,'get',500,2,(error,pls)=>{
-          if(error) cb(error);
-          else cb(pls);
-        });
-      }
-    }
-    
+    }    
 
     //find by price
     function findByPrice(db, minValue, maxValue, cb) {
@@ -188,7 +158,7 @@ const myError=require('../../error');
       try {
         db.collection("homes")
           .find({
-            cmimi: { $gte: minValue, $lte: maxValue },
+            price: { $gte: minValue, $lte: maxValue },
           })
           .toArray(function (err, docs) {
             if (err){
@@ -220,7 +190,7 @@ const myError=require('../../error');
       try {
         db.collection("homes")
           .find({
-            nr_dhomash: nr_rooms,
+            rooms: nr_rooms,
           })
           .toArray(function (err, docs) {
             if (err){
@@ -249,7 +219,6 @@ const myError=require('../../error');
 exports.getNormalHomes=getNormalHomes;
 exports.getPremiumHome=getPremiumHome;
 exports.findByRooms=findByRooms;
-exports.findByCity=findByCity;
 exports.findByPrice=findByPrice;
 exports.getAllHomes=getAllHomes;
 exports.getSpecificHome=getSpecificHome;
