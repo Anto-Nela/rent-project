@@ -33,8 +33,25 @@ catch(err){
 
 //Update home info
 function updateHome(db,req,id,o_id,cb){
+    /*
+    var img = fs.readFileSync(req.file.path,'base64', function(err, data) {
+        if (err){
+            myError.Error(db,'update',200,6,(error,pls)=>{
+                if(error) cb(error);
+                else cb(pls);
+             });
+        }
+        console.log(data);
+      });
+      
+      var finalImg = {
+          contentType: req.file.mimetype,
+          image:  new Buffer(img, 'base64')
+       };
+    */
+    
     let updhome={
-        //img: req.body.img,
+        //img: finalImg,
         adress: req.body.adress,
         sip: req.body.sip,
         nr_dhomash: req.body.nr_dhomash,
@@ -76,7 +93,7 @@ function updateHome(db,req,id,o_id,cb){
     }
 }
 
-//Update image
+/*Update image
 function addimagetoHome(db,req,cb){
    
    var img = fs.readFileSync(req.file.path,'base64', function(err, data) {
@@ -115,7 +132,7 @@ function addimagetoHome(db,req,cb){
           });
     }
 }
-
+*/
 
 
 //Update landlord info

@@ -8,17 +8,12 @@ const myError=require('../../error');
     long = parseFloat(longi);
 
     try{
-    var len=data.length-1;
-    var c=0;
     for(var i=0; i<data.length;i++) {
-      len=len-1; 
-      c=c+1;
       elem= getDistanceFromLatLonInKm(lat,long,
         data[i].location.lat,data[i].location.long);
           if (elem<=2) {
              nearMeHomes.push(data[i]);
             }
-            console.log(nearMeHomes);
         }
           if(nearMeHomes.length==0) {
            cb('No homes nearby found.');

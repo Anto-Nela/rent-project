@@ -64,6 +64,7 @@ router.get('/',function(req, res){
  });
  var upload = multer({ storage: storage });
 
+ /*
  //Add a picture to a home (add an /:id later to find where to save it)
  router.post('/upload/photo',checkAuth, upload.single('myImage'), (req, res) => {
   //const id = req.params.id;
@@ -76,7 +77,7 @@ router.get('/',function(req, res){
 });
 });
 });
-
+*/
 
 //Log in a user
 router.post('/login', (req, res)=>{

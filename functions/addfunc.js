@@ -3,8 +3,24 @@ const myError=require('../error');
 
 //Add a home
 function addHome(db,req,res,cb){
+   /*
+    var img = fs.readFileSync(req.file.path,'base64', function(err, data) {
+        if (err){
+            myError.Error(db,'update',200,6,(error,pls)=>{
+                if(error) cb(error);
+                else cb(pls);
+             });
+        }
+        console.log(data);
+      });
+      
+      var finalImg = {
+          contentType: req.file.mimetype,
+          image:  new Buffer(img, 'base64')
+       };
+    */
     let home1={
-        //img: req.body.img, 
+        //img: finalImg, 
         adress: req.body.adress,
         sip: req.body.sip,
         nr_dhomash: req.body.nr_dhomash,
