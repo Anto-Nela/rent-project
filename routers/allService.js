@@ -163,12 +163,12 @@ router.post('/logout', (req, res) => {
   
      //search homes
      router.get("/searchHomes/:faqe", (req, res) => {
-      const maxValue= req.query.cmimiMax;
-      const minValue= req.query.cmimiMin;
-      const rruga= req.query.rruga;
-      const nrdhoma= req.query.nrdhoma;
-      const nrpersona= req.query.nrpersona;
-      const fq=req.params.faqe;
+      const maxValue= req.query.maxPrice;
+      const minValue= req.query.minPrice;
+      const rruga= req.query.street;
+      const nrdhoma= req.query.rooms;
+      const nrpersona= req.query.tenants;
+      const fq=req.params.page;
   
       searchomes.searchHomes(db,maxValue,minValue,rruga,nrdhoma,nrpersona,fq, (err, json) => {
        if (err) res.json(err);
