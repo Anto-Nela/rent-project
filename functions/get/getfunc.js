@@ -3,7 +3,8 @@ const myError=require('../../error');
 
 //Get all users
 function getAllUsers(db,cb){
-        db.collection('users').find({}).toArray(function(err, docs) {
+        db.collection('users').find({}, {projection: {password:0, confirmpass:0,emailCode:0} })
+        .toArray(function(err, docs) {
              try{
             if(err){
                 myError.Error(db,'user',200,4,(error,pls)=>{
@@ -26,7 +27,8 @@ function getAllUsers(db,cb){
 //Get specific user
 function getSpecificUser(db,id,o_id,cb){
     try{ 
-        db.collection('users').findOne({'_id': o_id},(err,doc) =>{
+        db.collection('users').findOne({'_id': o_id},
+        {projection: {password:0, confirmpass:0,emailCode:0} },(err,doc) =>{
         if(!doc){
             myError.Error(db,'user',200,4,(error,pls)=>{
                 if(error) cb(error);
@@ -48,7 +50,7 @@ function getSpecificUser(db,id,o_id,cb){
 //Get all landlords
 function getAllLandlords(db,cb){
     try{ 
-        db.collection('landlords').find({}).toArray(function(err, docs) {
+        db.collection('landlords').find({},{projection: {password:0} }).toArray(function(err, docs) {
              if(err){
                 myError.Error(db,'landlord',200,4,(error,pls)=>{
                     if(error) cb(error);
@@ -70,7 +72,7 @@ function getAllLandlords(db,cb){
 //Get Specific Landlord
 function getSpecificLandlord(db,id,o_id,cb){
     try{ 
-        db.collection('landlords').findOne({'_id': o_id},(err,doc) =>{
+        db.collection('landlords').findOne({'_id': o_id},{projection: {password:0} },(err,doc) =>{
         if(!doc) {
             myError.Error(db,'landlord',200,4,(error,pls)=>{
                 if(error) cb(error);
