@@ -169,4 +169,4 @@ function updateLandlord(db,req,id,o_id,cb){
 exports.updateUser=updateUser;
 exports.updateHome=updateHome;
 exports.updateLandlord=updateLandlord;
-exports.addimagetoHome=addimagetoHome;
+//exports.addimagetoHome=addimagetoHome;

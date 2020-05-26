@@ -51,19 +51,19 @@ router.post('/register', (req, res) =>{
 router.get('/',function(req, res){
   res.sendFile(__dirname +'/index.html');
 });
-*/
- // SET STORAGE for storing photos
+
+  SET STORAGE for storing photos
  var storage = multer.diskStorage({
-  /* destination: function (req, file, cb) {
+   destination: function (req, file, cb) {
      cb(null,file.originalname);
    },
-   */
+   
    filename: function (req, file, cb) {
      cb(null, file.originalname)
    }
  });
  var upload = multer({ storage: storage });
-
+*/
  /*
  //Add a picture to a home (add an /:id later to find where to save it)
  router.post('/upload/photo',checkAuth, upload.single('myImage'), (req, res) => {
