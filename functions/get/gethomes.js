@@ -2,7 +2,7 @@ const users=require('../../schema/user');
 const myError=require('../../error');
 
 //find near me
-async function findNearMe(db,lati,longi,data,cb) {
+ function findNearMe(db,lati,longi,data,cb) {
   var nearMeHomes = [];
     lat = parseFloat(lati);
     long = parseFloat(longi);
@@ -10,31 +10,25 @@ async function findNearMe(db,lati,longi,data,cb) {
     try{
     var len=data.length-1;
     var c=0;
-    data.forEach( (item) => {
+    for(var i=0; i<data.length;i++) {
       len=len-1; 
       c=c+1;
-      elem1= getDistanceFromLatLonInKm(lat,long,
-        item.location.lat,item.location.long);
-        elem=elem1.then((nr)=>{
-          elem=nr;
-          if (elem>2) {
-             return;
+      elem= getDistanceFromLatLonInKm(lat,long,
+        data[i].location.lat,data[i].location.long);
+          if (elem<=2) {
+             nearMeHomes.push(data[i]);
             }
-            else {
-              nearMeHomes.push(item);
-            }
-        });
-            if(len===1&& item.length==0){
-              if(nearMeHomes.length==0) {
-           cb(null,'No homes nearby found');
-          }
-          else cb(null,nearMeHomes);
+            console.log(nearMeHomes);
         }
-        });
+          if(nearMeHomes.length==0) {
+           cb('No homes nearby found.');
+          }
+          else cb(null,nearMeHomes); 
+        
     }catch(err){
       myError.Error(db,'get',500,2,(error,pls)=>{
         if(error) cb(error);
-        else cb(pls); 
+        else cb(pls);
       });
       }
   }
@@ -43,7 +37,7 @@ async function findNearMe(db,lati,longi,data,cb) {
     return deg * (Math.PI / 180);
   }
 
-  async function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+  function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
     var R = 6371; // Radius of the earth in km
     var dLat = deg2rad(lat2 - lat1); // deg2rad below
     var dLon = deg2rad(lon2 - lon1);
