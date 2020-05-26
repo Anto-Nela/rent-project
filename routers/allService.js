@@ -162,7 +162,7 @@ router.post('/logout', (req, res) => {
 
   
      //search homes
-     router.get("/searchHomes/:faqe", (req, res) => {
+     router.get("/searchHomes/:page", (req, res) => {
       const maxValue= req.query.maxPrice;
       const minValue= req.query.minPrice;
       const rruga= req.query.street;
