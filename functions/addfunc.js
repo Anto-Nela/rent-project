@@ -2,7 +2,7 @@ const users=require('../schema/user');
 const myError=require('../error');
 
 //Add a home
-function addHome(db,req,res,cb){
+function addHome(db,req,res,id,cb){
    /*
     var img = fs.readFileSync(req.file.path,'base64', function(err, data) {
         if (err){
@@ -43,7 +43,8 @@ function addHome(db,req,res,cb){
         tv: req.body.tv,
         furnished: req.body.furnished,
         premium: req.body.premium,
-        description: req.body.description
+        description: req.body.description,
+        landlord: id
     }
 
     try{ 

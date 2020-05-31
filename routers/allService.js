@@ -336,11 +336,12 @@ router.post('/logout', (req, res) => {
 
 
     //Add a home
-    router.post('/add/homes/',checkAuth, (req, res) =>{
-        
+    router.post('/add/homes/:id',checkAuth, (req, res) =>{
+      const id = req.params.id;
+
         checkActv.checkActive(db,req,res,()=>{ 
             
-            addfunc.addHome(db,req,res,(err,json)=>{
+            addfunc.addHome(db,req,res,id,(err,json)=>{
             if(err) res.json(err);
            else res.json(json);
            });
